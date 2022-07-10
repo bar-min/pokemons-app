@@ -1,12 +1,15 @@
 <template>
   <main class="intro">
-     <div class="intro__cards">
+    <div class="intro__wrapper">
+      <div class="intro__cards">
         <div class="intro__card"
         v-for="pokemon in pokemons" 
         :key="pokemon"
-        > {{ pokemon.name }}
+        > {{ pokemon }}
         </div>
+     </div>
     </div>
+     
   </main>
 </template>
 
@@ -14,7 +17,7 @@
 export default {
   data(){
     return {
-      pokemons: [1, 2, 3]
+      pokemons: ['Pikachu', 'Bulbasaur', 'Raichu', 'Charmander', 'Meow', 'Slowepook', 'Charizard', 'Lava', 'Meow', 'Slowepook', 'Charizard', 'Lava']
     }
   }
 }

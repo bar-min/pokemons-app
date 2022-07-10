@@ -3,7 +3,7 @@
       <poke-header></poke-header>
       
       <poke-list></poke-list>
-      
+   
       <poke-footer></poke-footer>
       
 </template>
