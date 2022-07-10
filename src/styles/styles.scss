@@ -1,0 +1,19 @@
+body {
+  background-image: url('../assets/images/pokemon-bg.jpg');
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;  
+}
+
+$fontFamily: 'Edu SA Beginner', cursive;
+$fontSize: 20px;
+
+
+@import url('https://fonts.googleapis.com/css2?family=Edu+SA+Beginner:wght@400;500;600&display=swap');
+
+@import './null.scss';
+
+@import './header.scss';
+
+@import './intro.scss';
