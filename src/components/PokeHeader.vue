@@ -4,17 +4,17 @@
       <div class="header__blocks">
         <div class="header__search">
 
-          <input type="text" class="header__input" placeholder="Search" @input="$emit('search', $event.target.value)">
+          <input type="text" class="header__input" placeholder="Search">
           <button class="header__clear-btn">Clear</button>
         </div>
         <nav class="header__nav nav">
-          <a href="" class="nav__link nav__list">Pokemons</a>
-          <a href="" class="nav__link nav__liked-list">My likes</a>
+          <router-link to="/pokemons" class="nav__link nav__list">Pokemons</router-link>
+          <router-link to="/my-likes" class="nav__link nav__liked-list">My likes</router-link>
         </nav>
         <div class="header__logo logo">
-          <a href="" class="logo__link">
+          <router-link to="/" class="logo__link">
             <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/52.svg" alt="poke-logo" class="logo__pic">
-          </a>
+          </router-link>
         </div>
       </div>
     </div>
@@ -23,7 +23,7 @@
 
 <script>
 export default {
-emits: ['search']
+// emits: ['search']
 }
 </script>
 
