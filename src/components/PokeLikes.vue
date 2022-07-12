@@ -1,5 +1,9 @@
 <template>
-  <div>I likes pokemons!</div>
+  <section class="liked">
+    <div class="liked__wrapper">
+      I likes pokemons!
+    </div>
+  </section>
 </template>
 
 <script>

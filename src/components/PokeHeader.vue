@@ -22,9 +22,7 @@
 </template>
 
 <script>
-export default {
-// emits: ['search']
-}
+export default {}
 </script>
 
 <style>

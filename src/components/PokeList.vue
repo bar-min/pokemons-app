@@ -39,7 +39,7 @@ export default {
     }
   },
 
- computed: {
+  computed: {
     validName(){
       return (name) => name[0].toUpperCase() + name.slice(1).toLowerCase()
     }
@@ -62,7 +62,7 @@ export default {
 
       transformArray(arr){
         // get id from url
-         return arr.map((item) => {
+          return arr.map((item) => {
           let validId = item.url.split('/').find((item) => parseInt(item))
           return { name: item.name, id: validId}
         })
@@ -70,9 +70,9 @@ export default {
       }
     },
 
-    mounted(){
-      this.loadPokemons();
-    },
+  mounted(){
+    this.loadPokemons();
+  },
 }
 </script>
 
