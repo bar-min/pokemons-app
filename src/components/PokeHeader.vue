@@ -3,7 +3,8 @@
     <div class="header__wrapper">
       <div class="header__blocks">
         <div class="header__search">
-          <input type="text" class="header__input" placeholder="Search">
+
+          <input type="text" class="header__input" placeholder="Search" @input="$emit('search', $event.target.value)">
           <button class="header__clear-btn">Clear</button>
         </div>
         <nav class="header__nav nav">
@@ -22,7 +23,7 @@
 
 <script>
 export default {
-
+emits: ['search']
 }
 </script>
 

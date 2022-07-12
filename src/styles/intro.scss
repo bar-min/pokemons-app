@@ -10,7 +10,7 @@
     gap: 40px;
   }
   &__card{
-    flex-basis: 22%;
+    flex-basis: 30%;
     min-width: 250px;
     min-height: 250px;
     text-align: center;
@@ -18,5 +18,28 @@
     background: rgba(46,46,46,0.8);
     border-radius: 10px;
     backdrop-filter: blur(10px);
+  }
+  &__title{
+    padding: 10px 0;
+  }
+  &__picture{
+    & > img{
+      max-width: 100%;
+    }
+  }
+  &__details{
+    font-weight: 500;
+    margin: 10px 0;
+    font-size: 20px;
+    background: rgba(255, 230, 0, 0.8);
+    border-radius: 5px;
+    color: black;
+    padding: 4px 6px;
+  }
+  &__show-more{
+    font-weight: 600;
+    padding: 40px 0 0 0;
+    font-size: 40px;
+    text-align: center;
   }
 }
