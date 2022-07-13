@@ -1,6 +1,6 @@
 <template>
   <section class="liked">
-    <div class="liked__wrapper">
+    <div class="full-wrapper">
       I likes pokemons!
     </div>
   </section>

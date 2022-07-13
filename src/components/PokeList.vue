@@ -1,7 +1,8 @@
 <template>
   <main class="intro">
-    <div class="intro__wrapper">
+    <div class="full-wrapper">
       <div class="intro__cards">
+        
         <div class="intro__card"
         v-for="pokemon in pokemons" 
         :key="pokemon"
@@ -9,11 +10,15 @@
 
         <h3 class="intro__title">{{ validName(pokemon.name) }}</h3>
 
+        <router-link :to="{name: 'Pokemon', params: { pokeName: pokemon.name }}">
+
         <div class="intro__picture">
-          <img :src='imgURL + pokemon.id +".png"' alt="pokemon">
+          <img :src='validURL(imgURL, pokemon.id)' alt="pokemon">
         </div>
 
-        <button class="intro__details">Details</button>
+        </router-link>
+
+        <!-- <button class="intro__details">Details</button> -->
       </div>
      </div>
 
@@ -34,7 +39,7 @@ export default {
     return {
       imgURL: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/",
       pokemons: [],
-      pokemonsPerPage: 6,
+      pokemonsPerPage: 8,
       pokemonsFrom: 0,
     }
   },
@@ -42,7 +47,10 @@ export default {
   computed: {
     validName(){
       return (name) => name[0].toUpperCase() + name.slice(1).toLowerCase()
-    }
+    },
+    validURL(){
+      return (url, id, format = '.png') => url + id + format
+    }, 
   },
 
   methods:{
@@ -55,7 +63,7 @@ export default {
       },
 
       nextRequest(){
-        this.pokemonsFrom += 6;
+        this.pokemonsFrom += 8;
         
         this.loadPokemons();   
       },

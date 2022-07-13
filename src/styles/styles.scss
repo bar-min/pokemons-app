@@ -12,6 +12,11 @@ body {
   min-height: 100%;
 }
 
+.full-wrapper{
+  max-width: 1200px;
+  margin: 0 auto;
+
+}
 main{
   flex: 1 1 auto;
 }
@@ -30,6 +35,8 @@ $fontSize: 20px;
 @import './intro.scss';
 
 @import './liked.scss';
+
+@import './pokemon.scss';
 
 @import './footer.scss';
 
