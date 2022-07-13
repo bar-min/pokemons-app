@@ -36,6 +36,7 @@
 import axios from 'axios';
 
 export default {
+
   data(){
     return {
       weight: 10,
@@ -44,6 +45,7 @@ export default {
       gifURL: '',
     }
   },
+
   props: ['pokeName'],
 
   computed: {
@@ -53,15 +55,14 @@ export default {
     validSize(){
       return (value, units) => value / 10 + units
     },
-
   },
 
   methods: {
-    async loadPokemon(){
+    async loadPokemon(pokemoName = this.pokeName){
       let { 
         data: { 
           weight, height, id, 
-            sprites: { other, versions } } } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${this.pokeName}`)
+            sprites: { other, versions } } } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemoName}`)
   
       // Get url picture from data API and transform him
       let urlPicFromData = other['official-artwork']['front_default'];
@@ -79,6 +80,12 @@ export default {
     transformURL(url, id, format = '.png'){
       let validURL = url.split('/').filter(item => !parseInt(item)).join('/');
       return validURL + '/' + id + format
+    }
+  },
+  
+  watch:{
+    $route(to){
+      if(to.path === `/pokemons/${this.$route.params.pokeName}`) this.loadPokemon(this.$route.params.pokeName);
     }
   },
 
