@@ -36,6 +36,15 @@
               </ability-modal>
             </div>
           </div>
+          <!-- Types pokemons -->
+          <div class="pokemon__types types">
+            <h2 class="types__title">Types</h2>
+            <div 
+            class="types__item pokemon-block" 
+            :class="'types__' + item.name"
+            v-for="item in pokemonTypes" 
+            :key="item"> {{ validName(item.name) }}</div>
+          </div>
           <!-- End pokemon__description -->
         </div>
 
@@ -62,7 +71,8 @@ export default {
       pictureURL: '',
       gifURL: '',
       abilities: [],
-      abilityEffect: '',
+      abilityEffect: {},
+      pokemonTypes: []
     }
   },
 
@@ -81,7 +91,7 @@ export default {
     async loadPokemon(pokemoName = this.pokeName){
       let { 
         data: { 
-          weight, height, id, abilities, 
+          weight, height, id, abilities, types, 
             sprites: { other, versions } } } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemoName}`)
   
       // Get url picture from data API and transform him
@@ -95,6 +105,9 @@ export default {
       this.weight = weight;
       this.height = height;
       this.abilities = abilities;
+      this.pokemonTypes = types.map(item => {
+        return { name: item.type.name }
+      })
     },
 
     transformURL(url, id, format = '.png'){
@@ -114,7 +127,10 @@ export default {
   
   watch:{
     $route(to){
-      if(to.path === `/pokemons/${this.$route.params.pokeName}`) this.loadPokemon(this.$route.params.pokeName);
+      if(to.path === `/pokemons/${this.$route.params.pokeName}`) { 
+        this.loadPokemon(this.$route.params.pokeName)
+        this.abilityEffect.active = false; 
+      }
     }
   },
 
