@@ -3,30 +3,47 @@
     <div class="pokemon__wrapper">
       <div class="pokemon__blocks">
         <div class="pokemon__description">
+          <!-- Start pokemon__description -->
+          <!-- Name and Gif -->
           <div class="pokemon__intro">
-            <h1 class="pokemon__title pokemon__block">
+            <h1 class="pokemon__title pokemon-block">
                {{ validName(pokeName) }}
            </h1> 
-           <div class="pokemon__block pokemon__gif">
+           <div class="pokemon__gif pokemon-block">
             <img :src="gifURL" alt="">
            </div>
           </div>
-
+          <!-- Sizes -->
           <div class="pokemon__stats">
             <h2>Stats</h2>
-            <div class="pokemon__block">Weight: {{ validSize(weight, 'kg') }}</div>
-            <div class="pokemon__block">Height: {{ validSize(height, 'm') }}</div>
-            <div class="pokemon__block">Abilities</div>
+            <div class="pokemon-block">Weight: {{ validSize(weight, 'kg') }}</div>
+            <div class="pokemon-block">Height: {{ validSize(height, 'm') }}</div>
           </div>
-          
+          <!-- Abilities and Modal -->
+          <div class="pokemon__abilities abilities ">
+            <h2 class="abilities__title">Abilities</h2>
+            <div class="abilities__wrapper">
+              <div class="abilities__item pokemon-block" v-for="item in abilities" :key="item">
+              {{ validName(item.ability.name) }} 
+              
+              <button @click='loadAbilDescription(item.ability.url)' class="abilities__description">More</button>
+              </div>
+
+              <ability-modal 
+              v-if="abilityEffect.active"
+              :effect="abilityEffect" 
+              @close="abilityEffect.active = false">
+              </ability-modal>
+            </div>
+          </div>
+          <!-- End pokemon__description -->
         </div>
 
         <div class="pokemon__picture">
           <img :src='pictureURL' alt="" class="pokemon__pic">
         </div>
-
+        
       </div>
-      
     </div>
   </div>
   
@@ -35,14 +52,17 @@
 <script>
 import axios from 'axios';
 
-export default {
+import AbilityModal from './AbilityModal.vue';
 
+export default {
   data(){
     return {
       weight: 10,
       height: 10,
       pictureURL: '',
       gifURL: '',
+      abilities: [],
+      abilityEffect: '',
     }
   },
 
@@ -61,7 +81,7 @@ export default {
     async loadPokemon(pokemoName = this.pokeName){
       let { 
         data: { 
-          weight, height, id, 
+          weight, height, id, abilities, 
             sprites: { other, versions } } } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemoName}`)
   
       // Get url picture from data API and transform him
@@ -74,12 +94,21 @@ export default {
 
       this.weight = weight;
       this.height = height;
-     
+      this.abilities = abilities;
     },
 
     transformURL(url, id, format = '.png'){
       let validURL = url.split('/').filter(item => !parseInt(item)).join('/');
       return validURL + '/' + id + format
+    },
+
+    async loadAbilDescription(url){
+      // Get description ability from data api
+      let { data: { effect_entries: effect } } = await axios.get(url);
+      
+      let currentEffect = effect.find((item) => item.language.name === 'en')
+      
+      this.abilityEffect = { name: currentEffect['short_effect'], active: true }
     }
   },
   
@@ -91,7 +120,9 @@ export default {
 
   mounted(){
     this.loadPokemon()
-  }
+  },
+
+  components: { AbilityModal }
 
 }
 </script>

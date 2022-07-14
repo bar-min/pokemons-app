@@ -10,18 +10,13 @@
     font-size: 30px;
     gap: 40px;
   }
-  &__block{
-    font-size: 40px;
-    background: rgba(46, 46, 46, 0.8);
-    border-radius: 10px;
-    backdrop-filter: blur(10px);
 
-  }
   &__picture{
     background: rgba(46, 46, 46, 0.8);
     border-radius: 10px;
     backdrop-filter: blur(10px);
     min-width: 400px;
+    height: 100%;
     & > img {
       width: 100%;
     }
@@ -44,11 +39,46 @@
     padding: 15px 40px;
   }
   &__stats{
+    margin-bottom: 45px;
     display: flex;
     flex-direction: column;
     gap: 10px;
     & > div {
       padding: 15px;
     }
+  }
+
+  .abilities{
+    &__wrapper{
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+        & > div {
+          padding: 15px;
+        }
+    }
+    &__description{
+      position: absolute;
+      top: 0;
+      height: 100%;
+      right: 10px;
+      font-size: 25px;
+      color: yellow;
+      background: transparent;
+      transition: color 0.3s;
+      &:hover{
+        color: white;
+      }
+    }
+    &__title{
+      margin-bottom: 10px;
+    }
+  }
+  .pokemon-block{
+    font-size: 40px;
+    background: rgba(46, 46, 46, 0.8);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
   }
 }

@@ -1,8 +1,7 @@
 <template>
   <main class="intro">
     <div class="full-wrapper">
-      <div class="intro__cards">
-        
+      <div class="intro__cards">  
         <div class="intro__card"
         v-for="pokemon in pokemons" 
         :key="pokemon"
@@ -11,14 +10,11 @@
         <h3 class="intro__title">{{ validName(pokemon.name) }}</h3>
 
         <router-link :to="{name: 'Pokemon', params: { pokeName: pokemon.name }}">
-
         <div class="intro__picture">
           <img :src='validURL(imgURL, pokemon.id)' alt="pokemon">
         </div>
-
         </router-link>
-
-        <!-- <button class="intro__details">Details</button> -->
+        
       </div>
      </div>
 
