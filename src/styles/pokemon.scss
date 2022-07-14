@@ -1,25 +1,38 @@
 .pokemon {
   flex: 1 1 auto;
+
   &__wrapper{
     max-width: 1000px;
     margin: 0 auto;
+  }
+  &__description{
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+  }
+  .pokemon-blocks{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
   }
   .pokemon-block{
     font-size: 40px;
     background: rgba(46, 46, 46, 0.8);
     border-radius: 10px;
     backdrop-filter: blur(10px);
+    padding: 15px;
+    min-width: 220px;
   }
-  &__blocks{
+  &__body{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     font-size: 30px;
     gap: 40px;
     margin-bottom: 40px;
   }
   &__picture{
     background: rgba(46, 46, 46, 0.8);
-    border-radius: 10px;
+    border-radius: 15%;
     backdrop-filter: blur(10px);
     min-width: 400px;
     height: 100%;
@@ -27,42 +40,30 @@
       width: 100%;
     }
   }
+  // Pokemon features
+  // Intro
   &__intro{
     display: flex;
     gap: 10px;
-    margin-bottom: 30px;
   }
   &__gif{
-    width: 100%;
     height: 100%;
     padding: 10px;
+    background: rgba(46, 46, 46, 0.8);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    padding: 15px;
     & > img{
-      height: 50px;
+      max-height: 50px;
     }
   }
-  &__title{
-    padding: 15px 40px;
+  &__name{
+    padding: 15px 40px !important;
   }
-  &__stats{
-    margin-bottom: 45px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    & > div {
-      padding: 15px;
-    }
-  }
-
+  // Abilities
   .abilities{
-    margin-bottom: 40px;
     &__wrapper{
       position: relative;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-        & > div {
-          padding: 15px;
-        }
     }
     &__description{
       position: absolute;
@@ -77,20 +78,11 @@
         color: white;
       }
     }
-    &__title{
-      margin-bottom: 10px;
-    }
   }
 
   .types{
-    margin-bottom: 30px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    &__title{}
     &__item{
       text-align: center;
-      padding: 15px;
     }
     // All types
     &__grass{
@@ -153,7 +145,7 @@
     }
     &__picture{
       background: rgba(46, 46, 46, 0.8);
-      border-radius: 10px;
+      border-radius: 25%;
       backdrop-filter: blur(10px);
       padding: 15px;
       max-width: 350px;
@@ -168,6 +160,9 @@
       text-align: center;
       font-size: 35px;
       margin-bottom: 30px;
+    }
+    &__active{
+      background: rgba(200, 150, 48, 0.85)
     }
   }
 }

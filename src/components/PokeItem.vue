@@ -1,28 +1,27 @@
 <template>
   <div class="pokemon">
     <div class="pokemon__wrapper">
-      <div class="pokemon__blocks">
+      <div class="pokemon__body">
         <div class="pokemon__description">
-          <!-- Start pokemon__description -->
-          <!-- Name and Gif -->
+
           <div class="pokemon__intro">
-            <h1 class="pokemon__title pokemon-block">
+            <h1 class="pokemon__name pokemon-block">
                {{ validName(pokeName) }}
            </h1> 
-           <div class="pokemon__gif pokemon-block">
+           <div class="pokemon__gif">
             <img :src="gifURL" alt="">
            </div>
           </div>
-          <!-- Sizes -->
-          <div class="pokemon__stats">
+
+          <div class="pokemon__stats pokemon-blocks">
             <h2>Stats</h2>
             <div class="pokemon-block">Weight: {{ validSize(weight, 'kg') }}</div>
             <div class="pokemon-block">Height: {{ validSize(height, 'm') }}</div>
           </div>
-          <!-- Abilities and Modal -->
-          <div class="pokemon__abilities abilities ">
+
+          <div class="pokemon__abilities abilities pokemon-blocks">
             <h2 class="abilities__title">Abilities</h2>
-            <div class="abilities__wrapper">
+            <div class="abilities__wrapper pokemon-blocks">
               <div class="abilities__item pokemon-block" v-for="item in abilities" :key="item">
               {{ validName(item.ability.name) }} 
               
@@ -36,8 +35,8 @@
               </ability-modal>
             </div>
           </div>
-          <!-- Types pokemons -->
-          <div class="pokemon__types types">
+
+          <div class="pokemon__types types pokemon-blocks">
             <h2 class="types__title">Types</h2>
             <div 
             class="types__item pokemon-block" 
@@ -45,20 +44,22 @@
             v-for="item in pokemonTypes" 
             :key="item"> {{ validName(item.name) }}</div>
           </div>
-          <!-- End pokemon__description -->
+
         </div>
 
         <div class="pokemon__picture">
           <img :src='pictureURL' alt="" class="pokemon__pic">
         </div>
       </div>
+
       <div class="pokemon__evolution evolution">
         <h2 class="evolution__title">Evolution forms</h2>
         <div class="evolution__wrapper">
           <div 
           v-for="form in evolutionForms" 
           :key="form" 
-          class="evolution__picture">
+          class="evolution__picture"
+          :class="$route.params.pokeName === form.name ? 'evolution__active' : ''">
             <h3 class="evolution__name">{{ validName(form.name) }}</h3>
             <router-link :to="{name: 'Pokemon', params: { pokeName: form.name }}">
               <img :src="form.evolPicURL" class="evolution__img" alt="evolution-form">
@@ -66,6 +67,7 @@
           </div>
         </div>
       </div>
+
     </div>
   </div>
   
