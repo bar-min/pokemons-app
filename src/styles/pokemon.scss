@@ -15,6 +15,7 @@
     justify-content: space-between;
     font-size: 30px;
     gap: 40px;
+    margin-bottom: 40px;
   }
   &__picture{
     background: rgba(46, 46, 46, 0.8);
@@ -82,9 +83,10 @@
   }
 
   .types{
+    margin-bottom: 30px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
     &__title{}
     &__item{
       text-align: center;
@@ -141,4 +143,31 @@
     }
   }
 
+  .evolution{
+    margin-bottom: 100px;
+    &__wrapper{
+      display: flex;
+      align-content: center;
+      justify-content: center;
+      gap: 100px;
+    }
+    &__picture{
+      background: rgba(46, 46, 46, 0.8);
+      border-radius: 10px;
+      backdrop-filter: blur(10px);
+      padding: 15px;
+      max-width: 350px;
+    }
+    &__img{
+      width: 100%;
+    }
+    &__name{
+      text-align: center;
+    }
+    &__title{
+      text-align: center;
+      font-size: 35px;
+      margin-bottom: 30px;
+    }
+  }
 }

@@ -51,7 +51,20 @@
         <div class="pokemon__picture">
           <img :src='pictureURL' alt="" class="pokemon__pic">
         </div>
-        
+      </div>
+      <div class="pokemon__evolution evolution">
+        <h2 class="evolution__title">Evolution forms</h2>
+        <div class="evolution__wrapper">
+          <div 
+          v-for="form in evolutionForms" 
+          :key="form" 
+          class="evolution__picture">
+            <h3 class="evolution__name">{{ validName(form.name) }}</h3>
+            <router-link :to="{name: 'Pokemon', params: { pokeName: form.name }}">
+              <img :src="form.evolPicURL" class="evolution__img" alt="evolution-form">
+            </router-link>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -68,11 +81,15 @@ export default {
     return {
       weight: 10,
       height: 10,
+      urlPicFromDataApi: '',
+      urlGifFromDataApi: '',
       pictureURL: '',
       gifURL: '',
       abilities: [],
       abilityEffect: {},
-      pokemonTypes: []
+      pokemonTypes: [],
+      evolutionForms: [],
+      evolFormsPic: []
     }
   },
 
@@ -95,12 +112,12 @@ export default {
             sprites: { other, versions } } } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemoName}`)
   
       // Get url picture from data API and transform him
-      let urlPicFromData = other['official-artwork']['front_default'];
-      this.pictureURL = this.transformURL(urlPicFromData, id);
-      
+      this.urlPicFromDataApi = other['official-artwork']['front_default'];
+      this.pictureURL = this.transformURL(this.urlPicFromDataApi, id);
+
       // Get url gif from data API and transform him
-      let urlGifFromData = versions['generation-v']['black-white'].animated['front_default'];
-      this.gifURL = this.transformURL(urlGifFromData, id, '.gif')
+      this.urlGifFromDataApi = versions['generation-v']['black-white'].animated['front_default'];
+      this.gifURL = this.transformURL(this.urlGifFromDataApi, id, '.gif')
 
       this.weight = weight;
       this.height = height;
@@ -110,11 +127,6 @@ export default {
       })
     },
 
-    transformURL(url, id, format = '.png'){
-      let validURL = url.split('/').filter(item => !parseInt(item)).join('/');
-      return validURL + '/' + id + format
-    },
-
     async loadAbilDescription(url){
       // Get description ability from data api
       let { data: { effect_entries: effect } } = await axios.get(url);
@@ -122,13 +134,53 @@ export default {
       let currentEffect = effect.find((item) => item.language.name === 'en')
       
       this.abilityEffect = { name: currentEffect['short_effect'], active: true }
+    },
+
+    async loadEvolutionForms(pokemoName = this.pokeName){
+      let { data : { evolution_chain : evolution }} = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${pokemoName}`);
+      let response  = await axios.get(evolution.url)
+      let chain = response.data.chain;
+      // let id = response.data.id;
+
+      // Transform chain to get evolution forms array
+      this.getNamesEvolForms(chain);
+
+      this.evolutionForms = this.evolutionForms.map(item => {
+        return { 
+          name: item.name, 
+          idx: this.getIdFromURL(item.url), 
+          evolPicURL: this.transformURL(this.urlPicFromDataApi, this.getIdFromURL(item.url)) }
+      })
+    },
+    
+    // Support methods
+    transformURL(url, id, format = '.png'){
+      let validURL = url.split('/').filter(item => !parseInt(item)).join('/');
+      return validURL + '/' + id + format
+    },
+
+    getIdFromURL(url){
+      return url.split('/').find(item => parseInt(item));
+    },
+
+    getNamesEvolForms(options){
+      if(!Array.isArray(options)) {
+        this.evolutionForms.push( options.species )
+          if(options['evolves_to'].length) this.getNamesEvolForms(options['evolves_to'])
+          return;
+      } else {
+        let [obj] = options;
+        this.getNamesEvolForms(obj)
+      }
     }
   },
   
   watch:{
     $route(to){
       if(to.path === `/pokemons/${this.$route.params.pokeName}`) { 
-        this.loadPokemon(this.$route.params.pokeName)
+        this.loadPokemon(this.$route.params.pokeName);
+        this.evolutionForms = [];
+        this.loadEvolutionForms(this.$route.params.pokeName);
         this.abilityEffect.active = false; 
       }
     }
@@ -136,6 +188,7 @@ export default {
 
   mounted(){
     this.loadPokemon()
+    this.loadEvolutionForms()
   },
 
   components: { AbilityModal }
