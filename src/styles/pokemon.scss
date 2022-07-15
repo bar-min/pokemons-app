@@ -65,18 +65,20 @@
     &__wrapper{
       position: relative;
     }
+    &__item{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 5px;
+    }
     &__description{
-      position: absolute;
-      top: 0;
-      height: 100%;
-      right: 10px;
       font-size: 25px;
       color: yellow;
       background: transparent;
       transition: color 0.3s;
       &:hover{
         color: white;
-      }
+        }
     }
   }
 

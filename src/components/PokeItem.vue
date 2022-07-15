@@ -24,7 +24,7 @@
             <h2 class="abilities__title">Abilities</h2>
             <div class="abilities__wrapper pokemon-blocks">
               <div class="abilities__item pokemon-block" v-for="item in abilities" :key="item">
-              {{ validName(item.ability.name) }} 
+              <h3 class="abilities__name"> {{ validName(item.ability.name) }} </h3>
               
               <button @click='loadAbilDescription(item.ability.url)' class="abilities__description">More</button>
               </div>
