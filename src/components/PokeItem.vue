@@ -61,7 +61,7 @@
           class="evolution__picture"
           :class="$route.params.pokeName === form.name ? 'evolution__active' : ''">
             <h3 class="evolution__name">{{ validName(form.name) }}</h3>
-            <router-link :to="{name: 'Pokemon', params: { pokeName: form.name }}">
+            <router-link :to="{name: 'Pokemon', params: { pokeName: form.name }}" @click="scrollTop">
               <img :src="form.evolPicURL" class="evolution__img" alt="evolution-form">
             </router-link>
           </div>
@@ -174,6 +174,13 @@ export default {
         let [obj] = options;
         this.getNamesEvolForms(obj)
       }
+    },
+
+    scrollTop(){
+      window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+      });
     }
   },
   
@@ -184,6 +191,7 @@ export default {
         this.evolutionForms = [];
         this.loadEvolutionForms(this.$route.params.pokeName);
         this.abilityEffect.active = false; 
+        this.scrollTop();
       }
     }
   },
