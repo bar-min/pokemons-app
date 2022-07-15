@@ -1,5 +1,6 @@
 <template>
   <div class="pokemon">
+    <poke-loader v-if="showLoading"></poke-loader>
     <div class="pokemon__wrapper">
       <div class="pokemon__body">
         <div class="pokemon__description">
@@ -76,6 +77,7 @@
 <script>
 import axios from 'axios';
 
+import PokeLoader from './PokeLoader.vue'
 import AbilityModal from './AbilityModal.vue';
 
 export default {
@@ -91,7 +93,8 @@ export default {
       abilityEffect: {},
       pokemonTypes: [],
       evolutionForms: [],
-      evolFormsPic: []
+      evolFormsPic: [],
+      showLoading: false,
     }
   },
 
@@ -108,25 +111,35 @@ export default {
 
   methods: {
     async loadPokemon(pokemoName = this.pokeName){
-      let { 
+     try {
+      this.showLoading = true;
+
+       let { 
         data: { 
           weight, height, id, abilities, types, 
             sprites: { other, versions } } } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemoName}`)
   
-      // Get url picture from data API and transform him
-      this.urlPicFromDataApi = other['official-artwork']['front_default'];
-      this.pictureURL = this.transformURL(this.urlPicFromDataApi, id);
+        // Get url picture from data API and transform him
+        this.urlPicFromDataApi = other['official-artwork']['front_default'];
+        this.pictureURL = this.transformURL(this.urlPicFromDataApi, id);
 
-      // Get url gif from data API and transform him
-      this.urlGifFromDataApi = versions['generation-v']['black-white'].animated['front_default'];
-      this.gifURL = this.transformURL(this.urlGifFromDataApi, id, '.gif')
+        // Get url gif from data API and transform him
+        this.urlGifFromDataApi = versions['generation-v']['black-white'].animated['front_default'];
+        this.gifURL = this.transformURL(this.urlGifFromDataApi, id, '.gif')
 
-      this.weight = weight;
-      this.height = height;
-      this.abilities = abilities;
-      this.pokemonTypes = types.map(item => {
-        return { name: item.type.name }
-      })
+        this.weight = weight;
+        this.height = height;
+        this.abilities = abilities;
+        this.pokemonTypes = types.map(item => {
+          return { name: item.type.name }
+        })
+     } 
+     catch(err) {
+      console.log(err)
+     }
+     finally {
+      this.showLoading = false;
+     }
     },
 
     async loadAbilDescription(url){
@@ -201,7 +214,7 @@ export default {
     this.loadEvolutionForms()
   },
 
-  components: { AbilityModal }
+  components: { AbilityModal, PokeLoader }
 
 }
 </script>

@@ -1,5 +1,6 @@
 <template>
   <main class="intro">
+    <poke-loader v-if="showLoading"></poke-loader>
     <div class="full-wrapper">
       <div class="intro__cards">  
         <div class="intro__card"
@@ -21,14 +22,14 @@
       <div class="intro__show-more">
         <button class="intro__show-btn" @click="nextRequest()">Show more</button>
       </div>
-
     </div>
-     
   </main>
+
 </template>
 
 <script>
 import axios from 'axios'
+import PokeLoader from './PokeLoader.vue';
 
 export default {
   data(){
@@ -37,6 +38,7 @@ export default {
       pokemons: [],
       pokemonsPerPage: 8,
       pokemonsFrom: 0,
+      showLoading: false,
     }
   },
 
@@ -51,11 +53,21 @@ export default {
 
   methods:{
       async loadPokemons(){
-        let { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/?limit=${this.pokemonsPerPage}&&offset=${this.pokemonsFrom}`);
-      
-        let modifiedArray = this.transformArray(data.results);
-
-        this.pokemons = this.pokemons.concat(modifiedArray);
+        try {
+          this.showLoading = true;
+          
+          let { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/`, 
+          { params: {limit: this.pokemonsPerPage , offset: this.pokemonsFrom }});
+        
+          let modifiedArray = this.transformArray(data.results);
+          this.pokemons = this.pokemons.concat(modifiedArray);        
+        } 
+        catch(err) {
+          console.log(err)
+        } 
+        finally {
+          this.showLoading = false;
+        }
       },
 
       nextRequest(){
@@ -73,10 +85,12 @@ export default {
         
       }
     },
-
+  
   mounted(){
     this.loadPokemons();
   },
+
+  components: { PokeLoader }
 }
 </script>
 
