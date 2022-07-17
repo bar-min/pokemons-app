@@ -1,19 +1,18 @@
 <template>
   <main class="intro">
-    <poke-loader v-if="showLoading"></poke-loader>
+    <poke-loader v-if="loading"></poke-loader>
     <div class="full-wrapper">
       <div class="intro__cards">  
         <div class="intro__card"
         v-for="pokemon in pokemons" 
-        :key="pokemon"
-        > 
-
-        <h3 class="intro__title">{{ validName(pokemon.name) }} </h3>
+        :key="pokemon.id"> 
+        
+        <h3 class="intro__title">{{ pokemon.validName }} </h3>
         <img class="intro__pokeball" src="../assets/images/pokeball.svg" alt="pokeball">
 
         <router-link :to="{name: 'Pokemon', params: { pokeName: pokemon.name }}">
         <div class="intro__picture">
-          <img :src='validURL(imgURL, pokemon.id)' alt="pokemon">
+          <img :src='pokemon.picture' alt="pokemon">
         </div>
         </router-link>
         
@@ -21,7 +20,7 @@
      </div>
 
       <div class="intro__show-more">
-        <button class="intro__show-btn" @click="nextRequest()">Show more</button>
+        <button class="intro__show-btn" @click="nextRequest">Show more</button>
       </div>
     </div>
   </main>
@@ -29,61 +28,16 @@
 </template>
 
 <script>
-import axios from 'axios'
 import PokeLoader from './PokeLoader.vue';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
-  data(){
-    return {
-      imgURL: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/",
-      pokemons: [],
-      pokemonsPerPage: 8,
-      pokemonsFrom: 0,
-      showLoading: false,
-    }
-  },
-
   computed: {
-    validName(){
-      return (name) => name[0].toUpperCase() + name.slice(1).toLowerCase()
-    },
-    validURL(){
-      return (url, id, format = '.png') => url + id + format
-    }, 
+    ...mapGetters(['pokemons', 'loading'])
   },
 
   methods:{
-      async loadPokemons(){
-        try {
-          this.showLoading = true;
-          
-          let { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/`, 
-          { params: {limit: this.pokemonsPerPage , offset: this.pokemonsFrom }});
-        
-          let modifiedArray = this.transformArray(data.results);
-          this.pokemons = this.pokemons.concat(modifiedArray);        
-        } 
-        catch(err) {
-          console.log(err)
-        } 
-        finally {
-          this.showLoading = false;
-        }
-      },
-
-      nextRequest(){
-        this.pokemonsFrom += 8;
-        
-        this.loadPokemons();   
-      },
-
-      transformArray(arr){
-        // get id from url
-          return arr.map((item) => {
-          let validId = item.url.split('/').find((item) => parseInt(item))
-          return { name: item.name, id: validId}
-        })
-      },
+    ...mapActions(['loadPokemons', 'nextRequest'])
     },
   
   mounted(){
