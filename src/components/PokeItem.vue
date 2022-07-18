@@ -1,13 +1,13 @@
 <template>
   <div class="pokemon">
-    <poke-loader v-if="showLoading"></poke-loader>
+    <poke-loader v-if="loading"></poke-loader>
     <div class="pokemon__wrapper">
       <div class="pokemon__body">
         <div class="pokemon__description">
 
           <div class="pokemon__intro">
             <h1 class="pokemon__name pokemon-block">
-               {{ validName(pokeName) }}
+               {{ validName(name) }}
            </h1> 
            <div class="pokemon__gif">
             <img :src="gifURL" alt="">
@@ -16,23 +16,22 @@
 
           <div class="pokemon__stats pokemon-blocks">
             <h2>Stats</h2>
-            <div class="pokemon-block">Weight: {{ validSize(weight, 'kg') }}</div>
-            <div class="pokemon-block">Height: {{ validSize(height, 'm') }}</div>
+            <div class="pokemon-block" v-for="size in sizes" :key="size"> {{ size.title }}: {{ size.unit }} </div>
           </div>
 
           <div class="pokemon__abilities abilities pokemon-blocks">
             <h2 class="abilities__title">Abilities</h2>
             <div class="abilities__wrapper pokemon-blocks">
-              <div class="abilities__item pokemon-block" v-for="item in abilities" :key="item">
-              <h3 class="abilities__name"> {{ validName(item.ability.name) }} </h3>
+              <div class="abilities__item pokemon-block" v-for="ability in abilities" :key="ability">
+              <h3 class="abilities__name"> {{ validName(ability.name) }} </h3>
               
-              <button @click='loadAbilDescription(item.ability.url)' class="abilities__description">More</button>
+              <button @click='loadAbility(ability.url)' class="abilities__description">More</button>
               </div>
 
               <ability-modal 
-              v-if="abilityEffect.active"
-              :effect="abilityEffect" 
-              @close="abilityEffect.active = false">
+              v-if="effect.active"
+              :effect="effect" 
+              @close="effect.active = false">
               </ability-modal>
             </div>
           </div>
@@ -42,8 +41,10 @@
             <div 
             class="types__item pokemon-block" 
             :class="'types__' + item.name"
-            v-for="item in pokemonTypes" 
-            :key="item"> {{ validName(item.name) }}</div>
+            v-for="item in types" 
+            :key="item"> 
+            {{ validName(item.name) }} 
+            </div>
           </div>
 
         </div>
@@ -63,7 +64,7 @@
           :class="$route.params.pokeName === form.name ? 'evolution__active' : ''">
             <h3 class="evolution__name">{{ validName(form.name) }}</h3>
             <router-link :to="{name: 'Pokemon', params: { pokeName: form.name }}" @click="scrollTop">
-              <img :src="form.evolPicURL" class="evolution__img" alt="evolution-form">
+              <img :src="form.picture" class="evolution__img" alt="evolution-form">
             </router-link>
           </div>
         </div>
@@ -75,119 +76,23 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 import PokeLoader from './PokeLoader.vue'
 import AbilityModal from './AbilityModal.vue';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
-  data(){
-    return {
-      weight: 10,
-      height: 10,
-      urlPicFromDataApi: '',
-      urlGifFromDataApi: '',
-      pictureURL: '',
-      gifURL: '',
-      abilities: [],
-      abilityEffect: {},
-      pokemonTypes: [],
-      evolutionForms: [],
-      evolFormsPic: [],
-      showLoading: false,
-    }
-  },
-
   props: ['pokeName'],
 
   computed: {
     validName(){
     return (name) => name[0].toUpperCase() + name.slice(1).toLowerCase()
     },
-    validSize(){
-      return (value, units) => value / 10 + units
-    },
+
+    ...mapGetters(['name', 'sizes', 'pictureURL', 'gifURL', 'abilities', 'types', 'effect', 'loading', 'evolutionForms'])
   },
 
   methods: {
-    async loadPokemon(pokemoName = this.pokeName){
-     try {
-      this.showLoading = true;
-
-       let { 
-        data: { 
-          weight, height, id, abilities, types, 
-            sprites: { other, versions } } } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemoName}`)
-  
-        // Get url picture from data API and transform him
-        this.urlPicFromDataApi = other['official-artwork']['front_default'];
-        this.pictureURL = this.transformURL(this.urlPicFromDataApi, id);
-
-        // Get url gif from data API and transform him
-        this.urlGifFromDataApi = versions['generation-v']['black-white'].animated['front_default'];
-        this.gifURL = this.transformURL(this.urlGifFromDataApi, id, '.gif')
-
-        this.weight = weight;
-        this.height = height;
-        this.abilities = abilities;
-        this.pokemonTypes = types.map(item => {
-          return { name: item.type.name }
-        })
-     } 
-     catch(err) {
-      console.log(err)
-     }
-     finally {
-      this.showLoading = false;
-     }
-    },
-
-    async loadAbilDescription(url){
-      // Get description ability from data api
-      let { data: { effect_entries: effect } } = await axios.get(url);
-      
-      let currentEffect = effect.find((item) => item.language.name === 'en')
-      
-      this.abilityEffect = { name: currentEffect['short_effect'], active: true }
-    },
-
-    async loadEvolutionForms(pokemoName = this.pokeName){
-      let { data : { evolution_chain : evolution }} = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${pokemoName}`);
-      let response  = await axios.get(evolution.url)
-      let chain = response.data.chain;
-      // let id = response.data.id;
-
-      // Transform chain to get evolution forms array
-      this.getNamesEvolForms(chain);
-
-      this.evolutionForms = this.evolutionForms.map(item => {
-        return { 
-          name: item.name, 
-          idx: this.getIdFromURL(item.url), 
-          evolPicURL: this.transformURL(this.urlPicFromDataApi, this.getIdFromURL(item.url)) }
-      })
-    },
-    
-    // Support methods
-    transformURL(url, id, format = '.png'){
-      let validURL = url.split('/').filter(item => !parseInt(item)).join('/');
-      return validURL + '/' + id + format
-    },
-
-    getIdFromURL(url){
-      return url.split('/').find(item => parseInt(item));
-    },
-
-    getNamesEvolForms(options){
-      if(!Array.isArray(options)) {
-        this.evolutionForms.push( options.species )
-          if(options['evolves_to'].length) this.getNamesEvolForms(options['evolves_to'])
-          return;
-      } else {
-        let [obj] = options;
-        this.getNamesEvolForms(obj)
-      }
-    },
+    ...mapActions(['loadPokemon', 'loadAbility', 'loadEvolution']),
 
     scrollTop(){
       window.scrollTo({
@@ -201,17 +106,14 @@ export default {
     $route(to){
       if(to.path === `/pokemons/${this.$route.params.pokeName}`) { 
         this.loadPokemon(this.$route.params.pokeName);
-        this.evolutionForms = [];
-        this.loadEvolutionForms(this.$route.params.pokeName);
-        this.abilityEffect.active = false; 
+        this.effect.active = false; 
         this.scrollTop();
       }
     }
   },
 
   mounted(){
-    this.loadPokemon()
-    this.loadEvolutionForms()
+    this.loadPokemon(this.pokeName);
   },
 
   components: { AbilityModal, PokeLoader }

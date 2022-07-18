@@ -1,5 +1,6 @@
 import { createStore } from 'vuex';
 import axios from 'axios';
+import pokemon from './pokemon';
 
 export default createStore({
   state(){
@@ -55,7 +56,7 @@ export default createStore({
         let { pokePerPage, pokeFrom } = getters;
         
         let { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/`, 
-        { params: {limit: pokePerPage , offset: pokeFrom }});
+        { params: { limit: pokePerPage , offset: pokeFrom }});
         
         commit('setPokemons', data.results);  
       } 
@@ -66,9 +67,11 @@ export default createStore({
         commit('switchLoader', false)
       }
     },
-    nextRequest({commit, dispatch}){
+    nextRequest({ commit, dispatch }){
       commit('changePage');
       dispatch('loadPokemons');
-    }
-  }
+    },
+  },
+
+  modules: { pokemon }
 })
