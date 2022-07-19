@@ -33,13 +33,9 @@ export default {
 
       if(!likes.length) commit('setLikes', payload);
 
-      let similar = false;
-
-      likes.forEach(item => {
-        if(item.id === payload.id) similar = true;
-      })
-
-      if(!similar) commit('setLikes', payload);
+      let similarID = likes.findIndex(item => item.id === payload.id);
+      
+      if(similarID === -1) commit('setLikes', payload);
     },
 
     savePokemons({ getters }){

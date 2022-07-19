@@ -31,7 +31,7 @@
               </div>
 
               <poke-loader v-if="loadingAbility" style="position: absolute;"></poke-loader>
-              
+
               <ability-modal 
               v-if="effect.active"
               :effect="effect" 
@@ -66,10 +66,13 @@
           :key="form" 
           class="evolution__picture"
           :class="$route.params.pokeName === form.name ? 'evolution__active' : ''">
+
             <h3 class="evolution__name">{{ validName(form.name) }}</h3>
+
             <router-link :to="{name: 'Pokemon', params: { pokeName: form.name }}" @click="scrollTop">
               <img :src="form.picture" class="evolution__img" alt="evolution-form">
             </router-link>
+            
           </div>
         </div>
       </div>
