@@ -37,11 +37,12 @@ export default {
   },
 
   methods:{
-    ...mapActions(['loadPokemons', 'nextRequest', 'likePokemon'])
+    ...mapActions(['loadPokemons', 'nextRequest', 'likePokemon', 'loadAllPokemons'])
     },
   
   mounted(){
     this.loadPokemons();
+    this.loadAllPokemons();
   },
 
   components: { PokeLoader }
