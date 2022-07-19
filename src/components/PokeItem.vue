@@ -20,14 +20,18 @@
           </div>
 
           <div class="pokemon__abilities abilities pokemon-blocks">
+
             <h2 class="abilities__title">Abilities</h2>
+
             <div class="abilities__wrapper pokemon-blocks">
               <div class="abilities__item pokemon-block" v-for="ability in abilities" :key="ability">
-              <h3 class="abilities__name"> {{ validName(ability.name) }} </h3>
-              
-              <button @click='loadAbility(ability.url)' class="abilities__description">More</button>
+                <h3 class="abilities__name"> {{ validName(ability.name) }} </h3>
+                
+                <button @click='loadAbility(ability.url)' class="abilities__description">More</button>
               </div>
 
+              <poke-loader v-if="loadingAbility" style="position: absolute;"></poke-loader>
+              
               <ability-modal 
               v-if="effect.active"
               :effect="effect" 
@@ -88,7 +92,7 @@ export default {
     return (name) => name[0].toUpperCase() + name.slice(1).toLowerCase()
     },
 
-    ...mapGetters(['name', 'sizes', 'pictureURL', 'gifURL', 'abilities', 'types', 'effect', 'loading', 'evolutionForms'])
+    ...mapGetters(['name', 'sizes', 'pictureURL', 'gifURL', 'abilities', 'types', 'effect', 'loading', 'evolutionForms', 'loadingAbility'])
   },
 
   methods: {

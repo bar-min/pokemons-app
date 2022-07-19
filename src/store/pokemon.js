@@ -10,9 +10,10 @@ export default {
       height: 10,
       abilities: [],
       abilityEffect: {},
+      showAbility: false,
       types: [],
       evolution: [],
-      evolutionForms: []
+      evolutionForms: [],
     }
   },
 
@@ -49,6 +50,9 @@ export default {
       return state.evolutionForms.map(item => {
         return { name: item.name, id: item.id, picture: rootState.imgURL + item.id + '.png'}
       });
+    },
+    loadingAbility(state){
+      return state.showAbility;
     }
   },
 
@@ -74,6 +78,9 @@ export default {
     clearEvolutionForms(state){
       state.evolutionForms = [];
       state.evolution = [];
+    }, 
+    switchLoaderAbility(state, boolean){
+      state.showAbility = boolean;
     }
   },
 
@@ -107,11 +114,22 @@ export default {
      },
 
     async loadAbility({ commit }, url){
-      let { data: { effect_entries: effect } } = await axios.get(url);
+      try{
+        commit('switchLoaderAbility', true);
+
+        let { data: { effect_entries: effect } } = await axios.get(url);
       
-      let currentEffect = effect.find((item) => item.language.name === 'en');
+        let currentEffect = effect.find((item) => item.language.name === 'en');
+        
+        commit('setAbilityEffect', { name: currentEffect['short_effect'], active: true });
+      } 
+      catch(err){
+        console.log(err)
+      }
+      finally{
+        commit('switchLoaderAbility', false)
+      }
       
-      commit('setAbilityEffect', { name: currentEffect['short_effect'], active: true });
     },
 
     async loadEvolution({ dispatch }, url){
