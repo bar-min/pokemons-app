@@ -1,0 +1,43 @@
+.search{
+  flex: 1 1 auto;
+  margin-bottom: 80px;
+  &__cards{
+    display: flex;
+    flex-flow: row wrap;
+    gap: 40px;
+  }
+  &__card{
+    flex-basis: 22%;
+    min-width: 250px;
+    min-height: 250px;
+    text-align: center;
+    font-size: 30px;
+    background: rgba(46,46,46,0.8);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s;
+    &:hover{
+      background: rgba(46,46,46,0.65);
+      transform: scale(1.05);
+    }
+  }
+  &__title{
+    padding: 10px 0;
+  }
+  &__pokeball{
+    width: 35px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    transition: transform 0.15s;
+    &:hover{
+      transform: scale(1.1);
+    }
+  }
+  &__picture{
+    & > img{
+      max-width: 100%;
+    }
+  }
+}

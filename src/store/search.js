@@ -3,9 +3,9 @@ import axios from 'axios';
 export default {
   state(){
     return {
-      defaultPokemons: [],
       allPokemons: [],
-      // default pokemons create in store.js (in loadPokemons request)
+      searchedPokemons: [],
+      imgURL: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/",
     }
   },
 
@@ -13,17 +13,26 @@ export default {
     allPokemons(state){
       return state.allPokemons;
     },
-    defaultPokemons(state){
-      return state.defaultPokemons;
-    },
+    searchedPokemons(state){
+      return state.searchedPokemons;
+    }
   },
 
   mutations: {
     setAllPokemons(state, results){
       state.allPokemons = results;
     },
-    setDefaultPokemons(state, results){
-      state.defaultPokemons = state.defaultPokemons.concat(results);
+    setSearchedPokemons(state, results){
+      let modifiedArray = results.map((item) => {
+
+        let id = item.url.split('/').find((item) => parseInt(item));
+
+        let validName = item.name[0].toUpperCase() + item.name.slice(1).toLowerCase();
+
+        return { name: item.name, validName, id, picture: state.imgURL + id + '.png'}
+      });
+
+      state.searchedPokemons = modifiedArray;
     }
   },
 
@@ -32,17 +41,15 @@ export default {
       let { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/`, 
       { params: { limit: 500 , offset: 0 }});
 
-      commit('setAllPokemons', data.results)
+      commit('setAllPokemons', data.results);
     },
 
-    searchPokemon({ commit, getters }, inputValue ){
-      let { allPokemons, defaultPokemons } = getters;
+    filterPokemons({ commit, getters }, inputValue ){
+      let { allPokemons } = getters;
 
-      let searchedPokemons = allPokemons.filter(item => item.name.startsWith(inputValue));
+      let searched = allPokemons.filter(item => item.name.startsWith(inputValue));
 
-      commit('setPokemons', { data: searchedPokemons, concat: false })
-      
-      if(!inputValue) commit('setPokemons', { data: defaultPokemons, concat: false });
+      commit('setSearchedPokemons', searched);
     }
   }
 }

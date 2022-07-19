@@ -7,13 +7,12 @@
           v-model="inputValue" 
           @keyup.enter="searchPokemon(inputValue)" 
           @keyup.esc="clearInput" 
-          ref="searchInput"
           @blur="inputValue ? $event.target.focus() : $event.target.blur()"
           type="text" class="header__input" placeholder="Search">
+          
+          <button class="header__btn" @click="searchPokemon(inputValue)">Search</button>
 
-          <button class="header__clear-btn" @click="searchPokemon(inputValue)">Search</button>
-
-          <button class="header__clear-btn" @click="clearInput">Clear</button>
+          <button class="header__btn" @click="clearInput">Clear</button>
         </div>
 
         <nav class="header__nav nav">
@@ -43,10 +42,19 @@ export default {
   methods: {
     clearInput(){
       this.inputValue = '';
-      this.searchPokemon();
     },
 
-    ...mapActions(['searchPokemon'])
+    searchPokemon(value){
+      if(!value) return;
+
+      this.$router.push({ path: '/search', query: { text: value } });
+
+      this.filterPokemons(value);
+
+      this.inputValue = '';
+    },
+
+    ...mapActions(['filterPokemons'])
   },
 }
 </script>

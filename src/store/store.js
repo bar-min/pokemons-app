@@ -37,8 +37,8 @@ export default createStore({
     changePage(state){
       state.pokemonsFrom += 8;
     },
-    setPokemons(state, payload){
-      let modifiedArray = payload.data.map((item) => {
+    setPokemons(state, results){
+      let modifiedArray = results.map((item) => {
 
         let id = item.url.split('/').find((item) => parseInt(item));
 
@@ -47,13 +47,7 @@ export default createStore({
         return { name: item.name, validName, id, picture: state.imgURL + id + '.png'}
       });
       
-      if(payload.concat) { 
-        state.pokemons = state.pokemons.concat(modifiedArray);
-      } 
-
-      if(!payload.concat) {
-        state.pokemons = modifiedArray;
-      }
+      state.pokemons = state.pokemons.concat(modifiedArray);
     },
   },
 
@@ -67,9 +61,7 @@ export default createStore({
         let { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/`, 
         { params: { limit: pokePerPage , offset: pokeFrom }});
         
-        commit('setPokemons', { data: data.results, concat: true });  
-
-        commit('setDefaultPokemons', data.results);
+        commit('setPokemons', data.results);  
       } 
       catch(err) {
         console.log(err)
