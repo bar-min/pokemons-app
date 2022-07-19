@@ -8,7 +8,7 @@
         :key="pokemon.id"> 
         
         <h3 class="intro__title">{{ pokemon.validName }} </h3>
-        <img class="intro__pokeball" src="../assets/images/pokeball.svg" alt="pokeball">
+        <img @click="likePokemon(pokemon)" class="intro__pokeball" src="../assets/images/pokeball.svg" alt="pokeball">
 
         <router-link :to="{name: 'Pokemon', params: { pokeName: pokemon.name }}">
         <div class="intro__picture">
@@ -37,7 +37,7 @@ export default {
   },
 
   methods:{
-    ...mapActions(['loadPokemons', 'nextRequest'])
+    ...mapActions(['loadPokemons', 'nextRequest', 'likePokemon'])
     },
   
   mounted(){

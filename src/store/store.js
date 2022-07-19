@@ -1,6 +1,7 @@
 import { createStore } from 'vuex';
 import axios from 'axios';
 import pokemon from './pokemon';
+import likes from './likes';
 
 export default createStore({
   state(){
@@ -70,8 +71,8 @@ export default createStore({
     nextRequest({ commit, dispatch }){
       commit('changePage');
       dispatch('loadPokemons');
-    },
+    }
   },
 
-  modules: { pokemon }
+  modules: { pokemon, likes }
 })
