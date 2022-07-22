@@ -12,6 +12,7 @@ export default createStore({
       pokemonsPerPage: 8,
       pokemonsFrom: 0,
       imgURL: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/",
+      gifURL: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/"
     }
   },
 

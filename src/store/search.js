@@ -5,7 +5,6 @@ export default {
     return {
       allPokemons: [],
       searchedPokemons: [],
-      imgURL: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/",
     }
   },
 
@@ -22,14 +21,14 @@ export default {
     setAllPokemons(state, results){
       state.allPokemons = results;
     },
-    setSearchedPokemons(state, results){
+    setSearchedPokemons(state, { results, url }){
       let modifiedArray = results.map((item) => {
 
         let id = item.url.split('/').find((item) => parseInt(item));
 
         let validName = item.name[0].toUpperCase() + item.name.slice(1).toLowerCase();
 
-        return { name: item.name, validName, id, picture: state.imgURL + id + '.png'}
+        return { name: item.name, validName, id, picture: url + id + '.png'}
       });
 
       state.searchedPokemons = modifiedArray;
@@ -44,12 +43,12 @@ export default {
       commit('setAllPokemons', data.results);
     },
 
-    filterPokemons({ commit, getters }, inputValue ){
+    filterPokemons({ commit, getters, rootState }, inputValue ){
       let { allPokemons } = getters;
 
       let searched = allPokemons.filter(item => item.name.startsWith(inputValue));
 
-      commit('setSearchedPokemons', searched);
+      commit('setSearchedPokemons', { results: searched, url: rootState.imgURL });
     }
   }
 }

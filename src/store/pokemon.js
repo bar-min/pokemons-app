@@ -85,7 +85,7 @@ export default {
   },
 
   actions: {
-    async loadPokemon({ commit, dispatch }, pokeName){
+    async loadPokemon({ commit, dispatch, rootState }, pokeName){
       try {
         commit('switchLoader', true)
  
@@ -95,13 +95,13 @@ export default {
           name: data.name,
           weight: data.weight,
           height: data.height, 
-          picURL: data.sprites.other['official-artwork']['front_default'],
-          gifURL: data.sprites.versions['generation-v']['black-white'].animated['front_default'],
+          picURL: rootState.imgURL + data.id + '.png',
+          gifURL: rootState.gifURL + data.id + '.gif',
           abilities: data.abilities,
           types: data.types
         })
 
-        dispatch('clearEvolution');
+        await dispatch('clearEvolution');
 
         await dispatch('loadEvolution', pokeName);
       }
@@ -139,9 +139,9 @@ export default {
 
       let chain = response.data.chain;
 
-      dispatch('transformEvolution', chain);
+      await dispatch('transformEvolution', chain);
       
-      dispatch('loadEvolutionForms');
+      await dispatch('loadEvolutionForms');
     },
 
     async loadEvolutionForms({ commit, getters }){

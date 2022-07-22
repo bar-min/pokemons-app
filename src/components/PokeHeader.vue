@@ -42,6 +42,7 @@ export default {
   methods: {
     clearInput(){
       this.inputValue = '';
+      this.$router.push({ path: '/search', query: { text: this.inputValue } });
     },
 
     searchPokemon(value){
