@@ -3,7 +3,7 @@ import axios from 'axios';
 export default {
   state(){
     return {
-      allPokemons: [],
+      allPokemons: JSON.parse(localStorage.getItem('all')) || [],
       searchedPokemons: [],
     }
   },
@@ -36,11 +36,17 @@ export default {
   },
 
   actions: {
-    async loadAllPokemons({ commit }){
-      let { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/`, 
-      { params: { limit: 500 , offset: 0 }});
+    async loadAllPokemons({ commit, getters }){
+      let { allPokemons } = getters;
 
-      commit('setAllPokemons', data.results);
+      if(!allPokemons.length){
+        let { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/`, 
+        { params: { limit: 500 , offset: 0 }});
+
+        commit('setAllPokemons', data.results);
+
+        localStorage.setItem('all', JSON.stringify(data.results));
+      } 
     },
 
     filterPokemons({ commit, getters, rootState }, inputValue ){
@@ -49,6 +55,6 @@ export default {
       let searched = allPokemons.filter(item => item.name.startsWith(inputValue));
 
       commit('setSearchedPokemons', { results: searched, url: rootState.imgURL });
-    }
+    },
   }
 }

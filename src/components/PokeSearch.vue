@@ -30,8 +30,12 @@ export default {
   },
 
   methods:{
-    ...mapActions(['likePokemon'])
+    ...mapActions(['likePokemon', 'loadAllPokemons'])
   },
+
+  mounted(){
+    this.loadAllPokemons();
+  }
 }
 </script>
 
