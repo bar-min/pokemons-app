@@ -1,7 +1,9 @@
 <template>
   <section class="search">
     <div class="full-wrapper">
-      <transition-group name="list" tag="div" class="search__cards" appear>
+      <poke-default v-if="!searchedPokemons.length">Pokemon not found!</poke-default>
+
+      <transition-group v-else name="list" tag="div" class="search__cards" appear>
         <div class="search__card"
         v-for="pokemon in searchedPokemons" 
         :key="pokemon.id"> 
@@ -22,6 +24,7 @@
 </template>
 
 <script>
+import PokeDefault from './PokeDefault.vue';
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
@@ -35,7 +38,9 @@ export default {
 
   mounted(){
     this.loadAllPokemons();
-  }
+  },
+
+  components: { PokeDefault }
 }
 </script>
 

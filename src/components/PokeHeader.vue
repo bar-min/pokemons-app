@@ -42,7 +42,6 @@ export default {
   methods: {
     clearInput(){
       this.inputValue = '';
-      this.$router.push({ path: '/search', query: { text: this.inputValue } });
     },
 
     searchPokemon(value){
@@ -52,7 +51,7 @@ export default {
 
       this.filterPokemons(value);
 
-      this.inputValue = '';
+      this.clearInput();
     },
 
     ...mapActions(['filterPokemons'])

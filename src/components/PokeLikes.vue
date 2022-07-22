@@ -1,7 +1,9 @@
 <template>
   <section class="likes">
     <div class="full-wrapper">
-      <div class="likes__cards">  
+      <poke-default v-if="!favorites.length"> Please, like some pokemon! </poke-default>
+
+      <div class="likes__cards" v-else>  
         <div class="likes__card"
         v-for="pokemon in favorites" 
         :key="pokemon.id"> 
@@ -22,6 +24,7 @@
 </template>
 
 <script>
+import PokeDefault from './PokeDefault.vue';
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
@@ -45,7 +48,9 @@ export default {
   mounted(){
     this.savePokemons();
     this.renderPokemons();
-  }
+  },
+
+  components: { PokeDefault }
 }
 </script>
 
