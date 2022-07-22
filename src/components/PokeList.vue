@@ -1,8 +1,11 @@
 <template>
   <main class="intro">
-    <poke-loader v-if="loading"></poke-loader>
+    <transition name="loader">
+      <poke-loader v-if="loading"></poke-loader> 
+    </transition>
+    
     <div class="full-wrapper">
-      <div class="intro__cards">  
+      <transition-group tag="div" class="intro__cards" name="list">  
         <div class="intro__card"
         v-for="pokemon in pokemons" 
         :key="pokemon.id"> 
@@ -16,8 +19,8 @@
         </div>
         </router-link>
         
-      </div>
-     </div>
+        </div>
+     </transition-group>
 
       <div class="intro__show-more">
         <button class="intro__show-btn" @click="nextRequest">Show more</button>

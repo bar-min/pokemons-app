@@ -1,0 +1,25 @@
+.list-enter-active {
+  transition: all 0.8s ease-out;
+}
+.list-leave-active{
+  display: none;
+}
+
+.list-enter-from{
+  opacity: 0;
+  transform: translateY(20px);
+}
+.list-move{
+  transition: all 0.8s;
+}
+
+
+.loader-enter-active, 
+.loader-leave-active {
+  transition: all 0.8s ease;
+}
+
+.loader-enter-from,
+.loader-leave-to{
+  opacity: 0;
+}
