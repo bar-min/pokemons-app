@@ -1,7 +1,7 @@
 <template>
-  <div class="pokemon">
+  <div class="pokemon" >
     <poke-loader :loading="loading"></poke-loader> 
-
+    
     <div class="pokemon__wrapper">
       <div class="pokemon__body">
         <div class="pokemon__description">
@@ -58,25 +58,8 @@
           <img :src='pictureURL' alt="" class="pokemon__pic">
         </div>
       </div>
-
-      <div class="pokemon__evolution evolution">
-        <h2 class="evolution__title">Evolution forms</h2>
-        <div class="evolution__wrapper">
-          <div 
-          v-for="form in evolutionForms" 
-          :key="form" 
-          class="evolution__picture"
-          :class="$route.params.pokeName === form.name ? 'evolution__active' : ''">
-
-            <h3 class="evolution__name">{{ validName(form.name) }}</h3>
-
-            <router-link :to="{name: 'Pokemon', params: { pokeName: form.name }}">
-              <img :src="form.picture" class="evolution__img" alt="evolution-form">
-            </router-link>
-            
-          </div>
-        </div>
-      </div>
+      
+      <poke-evolution :evolution="evolutionForms" :validName="validName"></poke-evolution>
 
     </div>
   </div>
@@ -84,8 +67,10 @@
 </template>
 
 <script>
-import PokeLoader from '../components/PokeLoader.vue'
+import PokeLoader from '../components/PokeLoader.vue';
+import PokeEvolution from '@/components/PokeEvolution.vue';
 import AbilityModal from '../components/AbilityModal.vue';
+
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
@@ -107,7 +92,7 @@ export default {
     $route(to){
       if(to.path === `/pokemons/${this.$route.params.pokeName}`) { 
         this.loadPokemon(this.$route.params.pokeName);
-        this.effect.active = false; 
+        this.effect.active = false;   
       }
     }
   },
@@ -116,7 +101,7 @@ export default {
     this.loadPokemon(this.pokeName);
   },
 
-  components: { AbilityModal, PokeLoader }
+  components: { AbilityModal, PokeLoader, PokeEvolution }
 
 }
 </script>
