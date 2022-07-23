@@ -20,7 +20,6 @@ main{
   flex: 1 1 auto;
 }
 
-
 $fontFamily: 'Edu SA Beginner', cursive;
 $fontSize: 20px;
 
@@ -46,5 +45,7 @@ $fontSize: 20px;
 @import './transition.scss';
 
 @import './default.scss';
+
+@import './scroll.scss';
 
 @import './footer.scss';

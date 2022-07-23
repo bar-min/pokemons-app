@@ -26,12 +26,16 @@
         <button class="intro__show-btn" @click="nextRequest">Show more</button>
       </div>
     </div>
+
+    <slot name="scroll"></slot>
+    
   </main>
 
 </template>
 
 <script>
 import PokeLoader from './PokeLoader.vue';
+
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
@@ -39,10 +43,10 @@ export default {
     ...mapGetters(['pokemons', 'loading'])
   },
 
-  methods:{
+  methods:{    
     ...mapActions(['loadPokemons', 'nextRequest', 'likePokemon', 'loadAllPokemons'])
-    },
-  
+  },
+
   mounted(){
     this.loadPokemons();
     this.loadAllPokemons();

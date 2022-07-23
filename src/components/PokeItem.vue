@@ -74,7 +74,7 @@
 
             <h3 class="evolution__name">{{ validName(form.name) }}</h3>
 
-            <router-link :to="{name: 'Pokemon', params: { pokeName: form.name }}" @click="scrollTop">
+            <router-link :to="{name: 'Pokemon', params: { pokeName: form.name }}">
               <img :src="form.picture" class="evolution__img" alt="evolution-form">
             </router-link>
             
@@ -105,13 +105,6 @@ export default {
 
   methods: {
     ...mapActions(['loadPokemon', 'loadAbility', 'loadEvolution']),
-
-    scrollTop(){
-      window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-      });
-    }
   },
   
   watch:{
@@ -119,7 +112,6 @@ export default {
       if(to.path === `/pokemons/${this.$route.params.pokeName}`) { 
         this.loadPokemon(this.$route.params.pokeName);
         this.effect.active = false; 
-        this.scrollTop();
       }
     }
   },

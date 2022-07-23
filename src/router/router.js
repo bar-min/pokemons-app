@@ -6,9 +6,17 @@ import PokeSearch from '../components/PokeSearch';
 
 const router = createRouter({
   history: createWebHistory(),
+
+  scrollBehavior() {
+    return { top: 0, behavior: 'smooth' }
+  },
+  
   routes: [
     {
-      path: '/pokemons', component: PokeList, alias: '/',
+      path: '/pokemons', 
+      component: PokeList, 
+      name: 'Pokemons',
+      alias: '/',
     },
 
     {

@@ -12,7 +12,8 @@ export default createStore({
       pokemonsPerPage: 8,
       pokemonsFrom: 0,
       imgURL: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/",
-      gifURL: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/"
+      gifURL: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/",
+      showArrow: false,
     }
   },
 
@@ -28,6 +29,9 @@ export default createStore({
     },
     loading(state){
       return state.showLoading;
+    },
+    showArrow(state){
+      return state.showArrow;
     }
   },
 
@@ -50,6 +54,9 @@ export default createStore({
       
       state.pokemons = state.pokemons.concat(modifiedArray);
     },
+    changeScroll(state, boolean){
+      state.showArrow = boolean;
+    }
   },
 
   actions: {
@@ -75,6 +82,16 @@ export default createStore({
     nextRequest({ commit, dispatch }){
       commit('changePage');
       dispatch('loadPokemons');
+    },
+
+    setScroll({ commit }){
+      window.addEventListener('scroll', function(){
+        if(document.documentElement.clientHeight < window.pageYOffset){
+          commit('changeScroll', true);
+        } else {
+          commit('changeScroll', false);
+        }
+      });
     },
   },
 

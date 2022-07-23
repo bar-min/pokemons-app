@@ -20,11 +20,15 @@
         </div>
       </transition-group> 
     </div>
+
+    <slot name="scroll"></slot>
+
   </section>
 </template>
 
 <script>
 import PokeDefault from './PokeDefault.vue';
+
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
