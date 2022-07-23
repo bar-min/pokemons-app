@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import PokeList from '../components/PokeList';
-import PokeLikes from '../components/PokeLikes';
-import PokeItem from '../components/PokeItem';
-import PokeSearch from '../components/PokeSearch';
+import PokeList from '../views/PokeList';
+import PokeLikes from '../views/PokeLikes';
+import PokeItem from '../views/PokeItem';
+import PokeSearch from '../views/PokeSearch';
 
 const router = createRouter({
   history: createWebHistory(),

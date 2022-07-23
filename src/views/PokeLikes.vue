@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import PokeDefault from './PokeDefault.vue';
+import PokeDefault from '../components/PokeDefault.vue';
 
 import { mapGetters, mapActions } from 'vuex';
 

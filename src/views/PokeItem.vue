@@ -88,8 +88,8 @@
 </template>
 
 <script>
-import PokeLoader from './PokeLoader.vue'
-import AbilityModal from './AbilityModal.vue';
+import PokeLoader from '../components/PokeLoader.vue'
+import AbilityModal from '../components/AbilityModal.vue';
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
