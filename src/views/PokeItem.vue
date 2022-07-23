@@ -1,9 +1,7 @@
 <template>
   <div class="pokemon">
-    <transition name="loader">
-      <poke-loader v-if="loading"></poke-loader> 
-    </transition>
-    
+    <poke-loader :loading="loading"></poke-loader> 
+
     <div class="pokemon__wrapper">
       <div class="pokemon__body">
         <div class="pokemon__description">
@@ -33,9 +31,7 @@
                 <button @click='loadAbility(ability.url)' class="abilities__description">More</button>
               </div>
 
-              <transition name="loader">
-                <poke-loader v-if="loadingAbility" style="position: absolute;"></poke-loader>
-              </transition>    
+              <poke-loader :loading="loadingAbility" style="position: absolute;"></poke-loader> 
               
               <ability-modal 
               v-if="effect.active"

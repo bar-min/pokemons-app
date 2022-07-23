@@ -1,8 +1,6 @@
 <template>
   <main class="intro">
-    <transition name="loader">
-      <poke-loader v-if="loading"></poke-loader> 
-    </transition>
+    <poke-loader :loading="loading"></poke-loader> 
     
     <div class="full-wrapper">
       <transition-group tag="div" class="intro__cards" name="list">  
