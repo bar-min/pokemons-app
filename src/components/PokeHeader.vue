@@ -15,17 +15,27 @@
           <button class="header__btn" @click="clearInput">Clear</button>
         </div>
 
-        <nav class="header__nav nav">
+        <nav class="header__nav nav" ref="nav">
           <router-link to="/pokemons" class="nav__link nav__list">Pokemons</router-link>
           <router-link to="/my-likes" class="nav__link nav__liked-list">My likes</router-link>
         </nav>
 
-        <div class="header__logo logo">
+        <div class="header__logo logo" ref="logo">
           <router-link to="/" class="logo__link">
             <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/52.svg" alt="poke-logo" class="logo__pic">
           </router-link>
         </div>
+
+        <div class="header__burger" @click="showBurger">
+          <span></span>
+        </div>
+
+        <div class="header__close" @click="showBurger" ref="close">
+          <span>close</span>
+        </div>
+
       </div>
+
     </div>
   </header>
 </template>
@@ -54,7 +64,13 @@ export default {
       this.clearInput();
     },
 
-    ...mapActions(['filterPokemons'])
+    ...mapActions(['filterPokemons']),
+
+    showBurger(){
+      this.$refs.nav.classList.toggle('active');
+      this.$refs.logo.classList.toggle('active');
+      this.$refs.close.classList.toggle('active');
+    }
   },
 }
 </script>

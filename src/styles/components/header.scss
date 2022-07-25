@@ -7,17 +7,29 @@
   &__wrapper{
     max-width: 1400px;
     margin: 0 auto;
+    padding: 0 15px;
   }
   &__blocks{
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    gap: 60px;
+    @media (max-width: 900px){
+      align-items: baseline;
+    }
   }
   &__search{
-    flex-basis: 40%;
+    flex-basis: 45%;
+    padding: 15px 0;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    gap: 10px;
+    @media (max-width: 900px){
+      flex-basis: auto;
+    }
   }
   &__input{
-    width: 30%;
+    width: 150px;
     color: #fff;
     border-left: 5px solid rgb(255, 230, 0);
     background: rgba(255, 255, 255, 0.096);
@@ -26,11 +38,11 @@
     border-radius: 0 10px 10px 0;
     transition: all 0.3s;
     &:hover {
-        width: 45%;
+        width: 180px;
     }
     &:focus {
         border-left: 5px solid rgb(0, 255, 106);
-        width: 45%;
+        width: 180px;
     }
     &::placeholder{
       color: #a7a5a5;
@@ -38,7 +50,6 @@
   }
   &__btn{
     color: #fff;
-    margin-left: 30px;
     padding: 6px 18px;
     border-radius: 10px;
     background: rgba(255, 255, 255, 0.096);
@@ -74,6 +85,23 @@
         color: rgba(255, 230, 0, 0.85);
       }
     }
+
+    @media (max-width: 900px){
+      position: fixed;
+      flex-direction: column;
+      align-items: flex-start;
+      height: 100vh;
+      width: 240px;
+      right: -150%;
+      top: 0;
+      padding: 80px 50px 50px 50px;
+      font-size: 40px;
+      font-weight: 500;
+      gap: 60px;
+      transition: all 0.6s ease-out;
+      background: url('@/assets/images/poke-burger-bg.jpg') no-repeat center;
+      z-index: 10;
+    }
   }
   .logo{
     &__link{
@@ -81,6 +109,73 @@
         width: 65px;
       }
     }
+    @media (max-width: 900px){
+      position: fixed;
+      text-align: center;
+      z-index: 15;
+      right: -150%;
+      width: 240px;
+      bottom: 10%;
+      transition: all 0.6s ease-out;
+      &__link{ 
+        & > img {
+          width: 100px;
+        }
+      }
+    }
+  }
+  &__burger{
+    display: none;
+    position: relative;
+    min-width: 30px;
+    height: 20px;
+    z-index: 8;
+    cursor: pointer;
+    @media (max-width: 900px){
+      display: block;
+    }
+    &:before, &:after{
+      content: "";
+      background-color: white;
+      position: absolute;
+      width: 100%;
+      height: 3px;
+      left: 0;
+      transition: all 0.3s;
+      border-radius: 3px;
+    }
+    &:before{
+        top: 0;
+    }
+    &:after{
+        bottom: 0;
+    }
+    & > span{
+        position: absolute;
+        background-color: white;
+        left: 0;
+        width: 100%;
+        height: 3px;   
+        border-radius: 3px;
+        top: 9px; 
+        transition: all 0.3s;
+    }
+  }
+  &__close{
+    position: fixed;
+    right: -150%;
+    padding: 10px;
+    font-size: 25px;
+    cursor: pointer;
+    
+    @media (max-width: 900px){
+      transition: all 0.6s ease-out;
+      z-index: 15;
+      top: 15px;
+    }
+  }
+  .active{
+    right: 0;
   }
 }
  
