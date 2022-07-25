@@ -8,17 +8,27 @@
   backdrop-filter: blur(5px);
   z-index: 100;
 
+  // &__item{
+  //   width: 50px;
+  //   height: 50px;
+  //   border: 5px solid white;
+  //   border-radius: 50%;
+  //   border-top-color: yellow;
+  //   position: absolute;
+  //   left: 50%;
+  //   top: 50%;
+  //   transform: translate(-50%, -50%);
+  //   animation: 1s spin infinite linear;
+  // }
+
   &__item{
     width: 50px;
     height: 50px;
-    border: 5px solid white;
-    border-radius: 50%;
-    border-top-color: yellow;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    animation: 1s spin infinite linear;
+    animation: 0.8s spin infinite linear;
   }
 }
 

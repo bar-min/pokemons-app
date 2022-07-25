@@ -1,5 +1,5 @@
 body {
-  background-image: url('../assets/images/pokemon-bg.jpg');
+  background-image: url('../assets/images/pokemons-bg.png');
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: cover;
@@ -28,24 +28,24 @@ $fontSize: 20px;
 
 @import './null.scss';
 
-@import './header.scss';
-
-@import './poke-list.scss';
-
-@import './likes.scss';
-
-@import './pokemon.scss';
-
-@import './modal.scss';
-
-@import './loader.scss';
-
-@import './search.scss';
-
 @import './transition.scss';
 
-@import './default.scss';
+@import './components/header.scss';
 
-@import './scroll.scss';
+@import './components/poke-list.scss';
 
-@import './footer.scss';
+@import './components/likes.scss';
+
+@import './components/pokemon.scss';
+
+@import './components/modal.scss';
+
+@import './components/loader.scss';
+
+@import './components/search.scss';
+
+@import './components/default.scss';
+
+@import './components/scroll.scss';
+
+@import './components/footer.scss';

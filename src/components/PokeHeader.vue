@@ -8,7 +8,7 @@
           @keyup.enter="searchPokemon(inputValue)" 
           @keyup.esc="clearInput" 
           @blur="inputValue ? $event.target.focus() : $event.target.blur()"
-          type="text" class="header__input" placeholder="Search">
+          type="text" class="header__input" placeholder="Pokemon...">
           
           <button class="header__btn" @click="searchPokemon(inputValue)">Search</button>
 

@@ -11,12 +11,12 @@
     min-height: 250px;
     text-align: center;
     font-size: 30px;
-    background: rgba(46,46,46,0.8);
+    background: rgba(46,46,46,0.85);
     border-radius: 10px;
     backdrop-filter: blur(10px);
     transition: all 0.3s;
     &:hover{
-      background: rgba(46,46,46,0.65);
+      background: rgb(46, 46, 46);
       transform: scale(1.05);
     }
   }
@@ -29,11 +29,13 @@
     top: 10px;
     right: 10px;
     cursor: pointer;
-    transition: transform 0.15s;
+    transition: all 0.15s;
     &:hover{
-      transform: scale(1.1);
+      transform: scale(1.15);
+      ;
     }
   }
+
   &__picture{
     & > img{
       max-width: 100%;
@@ -42,13 +44,16 @@
   &__show-more{
     font-weight: 600;
     padding: 40px 0 0 0;
-    font-size: 40px;
+    font-size: 45px;
     text-align: center;
   
     & > button {
-      transition: color 0.3s;
+      transition: all 0.3s;
+      padding: 15px;
+      border-radius: 5px;
       &:hover{
         color: rgba(255, 230, 0, 0.85);
+        transform: scale(1.05);
       }
     }
   }

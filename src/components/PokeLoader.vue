@@ -1,7 +1,9 @@
 <template>
   <transition name="loader">
     <div class="loader" v-if="loading">
-      <div class="loader__item"></div>
+      <img 
+      src="../assets/images/pokeball.svg" 
+      class="loader__item">
     </div>
   </transition>
 </template>

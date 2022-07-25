@@ -18,6 +18,9 @@ a:focus,
 a:active {
 	outline: none;
 }
+html {
+	overflow-y: scroll;
+}
 html,
 body {
 	height: 100%;
@@ -29,7 +32,6 @@ body {
 	line-height: 1;
 	font-family: $fontFamily;
 	font-size: $fontSize;
-	//text-rendering: optimizeLegibility;
 	-ms-text-size-adjust: 100%;
 	-moz-text-size-adjust: 100%;
 	-webkit-text-size-adjust: 100%;
