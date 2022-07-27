@@ -4,7 +4,7 @@ export default {
   state(){
     return {
       allPokemons: JSON.parse(localStorage.getItem('all')) || [],
-      searchedPokemons: [],
+      searchedPokemons: JSON.parse(localStorage.getItem('searched')) || [],
     }
   },
 
@@ -32,6 +32,8 @@ export default {
       });
 
       state.searchedPokemons = modifiedArray;
+      
+      localStorage.setItem('searched', JSON.stringify(state.searchedPokemons));
     }
   },
 
