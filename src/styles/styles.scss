@@ -13,11 +13,17 @@ body {
 }
 
 .full-wrapper{
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
+  padding: 0 30px;
 }
 main{
   flex: 1 1 auto;
+}
+
+@mixin adaptiveValue($property, $startSize, $minSize, $maxWidth){
+	$addSize: $startSize - $minSize;
+		#{$property}: calc(#{$minSize + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidth - 320}));	
 }
 
 $fontFamily: 'Edu SA Beginner', cursive;

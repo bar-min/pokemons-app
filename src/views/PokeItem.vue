@@ -4,12 +4,12 @@
     
     <div class="pokemon__wrapper">
       <div class="pokemon__body">
-        <div class="pokemon__description">
-
+        <div class="pokemon__description" ref="info">
           <div class="pokemon__intro">
             <h1 class="pokemon__name pokemon-block">
                {{ validName(name) }}
            </h1> 
+           
            <div class="pokemon__gif">
             <img :src="gifURL" alt="">
            </div>
@@ -54,7 +54,7 @@
 
         </div>
 
-        <div class="pokemon__picture">
+        <div class="pokemon__picture" ref="picture">
           <img :src='pictureURL' alt="" class="pokemon__pic">
         </div>
       </div>
@@ -99,6 +99,10 @@ export default {
 
   mounted(){
     this.loadPokemon(this.pokeName);
+
+    if(document.documentElement.clientWidth < 950){
+      this.$refs.info.prepend(this.$refs.picture);
+    }
   },
 
   components: { AbilityModal, PokeLoader, PokeEvolution }

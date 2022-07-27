@@ -1,14 +1,16 @@
 .intro{
-  margin-bottom: 80px;
+  @include adaptiveValue('margin-bottom', 80, 40, 1200);
   &__cards{
     display: flex;
     flex-flow: row wrap;
-    gap: 40px;
+    justify-content: center;
+    gap: 48px;
   }
   &__card{
-    flex-basis: 22%;
-    min-width: 250px;
-    min-height: 250px;
+    flex-basis: 265px;
+    @media (max-width: 950px){
+      @include adaptiveValue('flex-basis', 265, 500, 950);
+    }
     text-align: center;
     font-size: 30px;
     background: rgba(46,46,46,0.85);
