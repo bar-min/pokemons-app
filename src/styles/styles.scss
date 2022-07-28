@@ -17,13 +17,14 @@ body {
   margin: 0 auto;
   padding: 0 30px;
 }
+
 main{
   flex: 1 1 auto;
 }
 
 @mixin adaptiveValue($property, $startSize, $minSize, $maxWidth){
 	$addSize: $startSize - $minSize;
-		#{$property}: calc(#{$minSize + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidth - 320}));	
+	#{$property}: calc(#{$minSize + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidth - 320}));	
 }
 
 $fontFamily: 'Edu SA Beginner', cursive;
@@ -44,6 +45,8 @@ $fontSize: 20px;
 
 @import './components/pokemon.scss';
 
+@import './components/evolution.scss';
+
 @import './components/modal.scss';
 
 @import './components/loader.scss';
@@ -53,5 +56,7 @@ $fontSize: 20px;
 @import './components/default.scss';
 
 @import './components/scroll.scss';
+
+@import './components/pokeball.scss';
 
 @import './components/footer.scss';

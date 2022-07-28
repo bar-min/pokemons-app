@@ -1,0 +1,27 @@
+.pokemon-liked{
+  box-shadow: 5px 5px 40px 10px rgba(237,85, 100, 0.6);
+  background: rgba(58, 34, 58, 0.8) !important;
+  backdrop-filter: blur(0) !important;
+}
+
+.pokeball{
+  position: absolute;
+  height: 35px;
+  width: 35px;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  background: url('@/assets/images/pokeball.svg') no-repeat;
+  transition: all 0.15s;
+  &:hover{
+    transform: scale(1.15);
+  }
+
+  &_active{
+    transform: rotate(180deg);
+    transition: transform 0.65s;
+    &:hover{
+      transform: rotate(0);
+    }
+  }
+}

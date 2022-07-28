@@ -1,0 +1,33 @@
+.evolution{
+  @include adaptiveValue('margin-bottom', 80, 40, 1200);
+  
+  &__wrapper{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    @include adaptiveValue('gap', 100, 15, 1920);
+  }
+  &__picture{
+    background: rgba(46, 46, 46, 0.8);
+    border-radius: 25%;
+    backdrop-filter: blur(10px);
+    @include adaptiveValue('padding', 15, 10, 1920);
+    max-width: 350px;
+  }
+  &__img{
+    width: 100%;
+    min-width: 65px;
+  }
+  &__name{
+    text-align: center;
+  }
+  &__title{
+    text-align: center;
+    font-size: 35px;
+    margin-bottom: 30px;
+  }
+  &__active{
+    background: #8bc34a;
+    background: linear-gradient(0deg, #8bc34a 46%, rgba(53, 113, 122, 0.795956) 100%);
+  }
+}
