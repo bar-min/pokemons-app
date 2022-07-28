@@ -6,10 +6,12 @@
       <transition-group v-else name="list" tag="div" class="search__cards" appear>
         <div class="search__card"
         v-for="pokemon in searchedPokemons" 
-        :key="pokemon.id"> 
+        :key="pokemon.id"
+        :class="{'pokemon-liked': pokemon.liked }"> 
         
-          <h3 class="search__title">{{ pokemon.validName }} </h3>
-          <img @click="likePokemon(pokemon)" class="search__pokeball" src="../assets/images/pokeball.svg" alt="pokeball">
+          <h3 class="search__title"> {{ pokemon.validName }} </h3>
+
+          <poke-ball :pokemon="pokemon"></poke-ball>
 
           <router-link :to="{name: 'Pokemon', params: { pokeName: pokemon.name }}">
           <div class="search__picture">
@@ -28,23 +30,17 @@
 
 <script>
 import PokeDefault from '../components/PokeDefault.vue';
+import PokeBall from '../components/PokeBall.vue';
 
-import { mapActions, mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
+
 
 export default {
   computed: {
     ...mapGetters(['searchedPokemons'])
   },
 
-  methods:{
-    ...mapActions(['likePokemon', 'loadAllPokemons'])
-  },
-
-  mounted(){
-    this.loadAllPokemons();
-  },
-
-  components: { PokeDefault }
+  components: { PokeDefault, PokeBall }
 }
 </script>
 

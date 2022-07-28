@@ -12,9 +12,13 @@ export default {
     allPokemons(state){
       return state.allPokemons;
     },
-    searchedPokemons(state){
-      return state.searchedPokemons;
-    }
+
+    searchedPokemons: (state, { likes }) => state.searchedPokemons.map(( item => {
+      let isLiked = likes.some(like => like.name === item.name);
+
+      return (isLiked) ? (item.liked = true, item) : item;
+    })
+    ),
   },
 
   mutations: {
@@ -28,13 +32,13 @@ export default {
 
         let validName = item.name[0].toUpperCase() + item.name.slice(1).toLowerCase();
 
-        return { name: item.name, validName, id, picture: url + id + '.png'}
+        return { name: item.name, validName, id, picture: url + id + '.png', liked: false };
       });
 
       state.searchedPokemons = modifiedArray;
       
       localStorage.setItem('searched', JSON.stringify(state.searchedPokemons));
-    }
+    },
   },
 
   actions: {

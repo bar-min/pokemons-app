@@ -6,10 +6,12 @@
       <transition-group tag="div" class="intro__cards" name="list">  
         <div class="intro__card"
         v-for="pokemon in pokemons" 
-        :key="pokemon.id"> 
+        :key="pokemon.id"
+        :class="{'pokemon-liked': pokemon.liked }"> 
         
         <h3 class="intro__title">{{ pokemon.validName }} </h3>
-        <img @click="likePokemon(pokemon)" class="intro__pokeball" src="../assets/images/pokeball.svg" alt="pokeball">
+
+        <poke-ball :pokemon="pokemon"></poke-ball>
 
         <router-link :to="{name: 'Pokemon', params: { pokeName: pokemon.name }}">
         <div class="intro__picture">
@@ -33,6 +35,7 @@
 
 <script>
 import PokeLoader from '../components/PokeLoader.vue';
+import PokeBall from '../components/PokeBall.vue';
 
 import { mapActions, mapGetters } from 'vuex';
 
@@ -42,7 +45,7 @@ export default {
   },
 
   methods:{    
-    ...mapActions(['loadPokemons', 'nextRequest', 'likePokemon', 'loadAllPokemons'])
+    ...mapActions(['loadPokemons', 'loadAllPokemons', 'nextRequest'])
   },
 
   mounted(){
@@ -50,7 +53,7 @@ export default {
     this.loadAllPokemons();
   },
 
-  components: { PokeLoader }
+  components: { PokeLoader, PokeBall }
 }
 </script>
 

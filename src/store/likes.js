@@ -28,14 +28,20 @@ export default {
   },
 
   actions: {
-    likePokemon({ commit, getters }, payload ){
+    likePokemon({ commit, dispatch, getters }, payload ){
       let { likes } = getters;
 
-      if(!likes.length) commit('setLikes', payload);
+      payload.liked = true;
 
-      let similarID = likes.findIndex(item => item.id === payload.id);
+      if(!likes.length) {
+        commit('setLikes', payload);
+      } else {
+        let similarID = likes.findIndex(item => item.id === payload.id);
       
-      if(similarID === -1) commit('setLikes', payload);
+        if(similarID === -1) commit('setLikes', payload);
+      }
+
+      dispatch('savePokemons');
     },
 
     savePokemons({ getters }){
@@ -45,15 +51,25 @@ export default {
     },
 
     renderPokemons({ commit }){
-      commit('setFavorites', JSON.parse(localStorage.getItem('favorites')));
+      if(localStorage.getItem('favorites')){
+        commit('setFavorites', JSON.parse(localStorage.getItem('favorites')));
+      }
     },
 
-    removePokemon({ commit, dispatch }, pokemon){
-      commit('delLikes', pokemon);
+    removePokemon({ commit, dispatch, rootState }, { pokemon, render } ){
+      let { pokemons } = rootState;
+
+      let currentPokemon = pokemons.find(item => item.name === pokemon.name);
+
+      if(currentPokemon) currentPokemon.liked = false;
+
+      pokemon.liked = false;
+
+      commit('delLikes', pokemon.id);
 
       dispatch('savePokemons');
 
-      dispatch('renderPokemons');
+      if(render) dispatch('renderPokemons');
     }
   }
 }

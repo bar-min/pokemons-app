@@ -85,7 +85,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['loadPokemon', 'loadAbility', 'loadEvolution']),
+    ...mapActions(['loadPokemon', 'loadAbility']),
   },
   
   watch:{

@@ -9,7 +9,7 @@
         :key="pokemon.id"> 
         
         <h3 class="likes__title">{{ pokemon.validName }} </h3>
-        <img @click="removePokemon(pokemon.id)" class="likes__remove" src="../assets/images/remove.svg" alt="remove">
+        <img @click="removePokemon({ pokemon, render: true })" class="likes__remove" src="../assets/images/remove.svg" alt="remove">
 
         <router-link :to="{name: 'Pokemon', params: { pokeName: pokemon.name }}">
         <div class="likes__picture">
@@ -37,20 +37,18 @@ export default {
   },
 
   methods: {
-    ...mapActions(['savePokemons', 'renderPokemons', 'removePokemon'])
+    ...mapActions(['renderPokemons', 'removePokemon'])
   },
 
   watch:{
     $route(to){
       if(to.path == '/my-likes'){
-        this.savePokemons();
         this.renderPokemons();
       } 
     }
   },
 
   mounted(){
-    this.savePokemons();
     this.renderPokemons();
   },
 

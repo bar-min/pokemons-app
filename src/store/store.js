@@ -24,9 +24,12 @@ export default createStore({
     pokeFrom(state){
       return state.pokemonsFrom;
     },
-    pokemons(state){
-      return state.pokemons;
-    },
+    pokemons: (state, { likes }) => state.pokemons.map(( item => {
+      let isLiked = likes.some(like => like.name === item.name);
+
+      return (isLiked) ? (item.liked = true, item) : item;
+    })
+    ),
     loading(state){
       return state.showLoading;
     },
@@ -49,7 +52,7 @@ export default createStore({
 
         let validName = item.name[0].toUpperCase() + item.name.slice(1).toLowerCase();
 
-        return { name: item.name, validName, id, picture: state.imgURL + id + '.png'}
+        return { name: item.name, validName, id, picture: state.imgURL + id + '.png', liked: false }
       });
       
       state.pokemons = state.pokemons.concat(modifiedArray);
