@@ -87,28 +87,29 @@ export default {
   },
 
   methods: {
+    renderPokemon(name = this.pokeName){
+      this.loadPokemon(name);
+      this.effect.active = false; 
+    },
+
     ...mapActions('pokemon', ['loadPokemon', 'loadAbility']),
   },
-  
-  watch:{
-    $route(to){
-      if(to.path === `/pokemons/${this.$route.params.pokeName}`) { 
-        this.loadPokemon(this.$route.params.pokeName);
-        this.effect.active = false;   
-      }
-    }
+
+  beforeRouteEnter(to, from, next){
+    next(vm => { 
+      vm.renderPokemon(to.params.pokeName);
+
+      if(document.documentElement.clientWidth < 950){
+      vm.$refs.info.prepend(vm.$refs.picture);
+      } 
+    })
   },
 
-  mounted(){
-    this.loadPokemon(this.pokeName);
-
-    if(document.documentElement.clientWidth < 950){
-      this.$refs.info.prepend(this.$refs.picture);
-    }
+  beforeRouteUpdate(to){
+    this.renderPokemon(to.params.pokeName);
   },
 
   components: { AbilityModal, PokeLoader, PokeEvolution }
-
 }
 </script>
 

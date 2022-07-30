@@ -40,16 +40,8 @@ export default {
     ...mapActions('likes', ['renderPokemons', 'removePokemon'])
   },
 
-  watch:{
-    $route(to){
-      if(to.path == '/my-likes'){
-        this.renderPokemons();
-      } 
-    }
-  },
-
-  mounted(){
-    this.renderPokemons();
+  beforeRouteEnter(to, from, next){
+    next(vm => vm.renderPokemons())
   },
 
   components: { PokeDefault }
