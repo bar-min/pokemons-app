@@ -1,6 +1,8 @@
 import axios from 'axios';
 
 export default {
+  namespaced: true,
+
   state(){
     return {
       name: 'pikachu',
@@ -87,7 +89,7 @@ export default {
   actions: {
     async loadPokemon({ commit, dispatch, rootState }, pokeName){
       try {
-        commit('switchLoader', true)
+        commit('switchLoader', true, { root: true })
  
         let { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokeName}`);
 
@@ -109,7 +111,7 @@ export default {
        console.log(err)
       }
       finally {
-        commit('switchLoader', false)
+        commit('switchLoader', false, { root: true })
       }
      },
 

@@ -27,10 +27,13 @@ export default {
   name: 'App',
 
   methods: {
-    ...mapActions(['setScroll'])
+    ...mapActions(['setScroll']),
+    
+    ...mapActions('search', ['loadAllPokemons'])
   },
 
   mounted(){
+    this.loadAllPokemons();
     this.setScroll();
   },
 

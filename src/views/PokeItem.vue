@@ -81,11 +81,13 @@ export default {
     return (name) => name[0].toUpperCase() + name.slice(1).toLowerCase()
     },
 
-    ...mapGetters(['name', 'sizes', 'pictureURL', 'gifURL', 'abilities', 'types', 'effect', 'loading', 'evolutionForms', 'loadingAbility'])
+    ...mapGetters(['loading']),
+
+    ...mapGetters('pokemon', ['name', 'sizes', 'pictureURL', 'gifURL', 'abilities', 'types', 'effect', 'evolutionForms', 'loadingAbility'])
   },
 
   methods: {
-    ...mapActions(['loadPokemon', 'loadAbility']),
+    ...mapActions('pokemon', ['loadPokemon', 'loadAbility']),
   },
   
   watch:{

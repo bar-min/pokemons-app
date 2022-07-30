@@ -24,12 +24,11 @@ export default createStore({
     pokeFrom(state){
       return state.pokemonsFrom;
     },
-    pokemons: (state, { likes }) => state.pokemons.map(( item => {
-      let isLiked = likes.some(like => like.name === item.name);
+    pokemons(state, getters){
+      let likesIDs = getters['likes/likesIDs']
 
-      return (isLiked) ? (item.liked = true, item) : item;
-    })
-    ),
+      return state.pokemons.map(( item => (likesIDs.includes(item.id)) ? (item.liked = true, item) : item))
+    },
     loading(state){
       return state.showLoading;
     },

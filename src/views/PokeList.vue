@@ -45,12 +45,11 @@ export default {
   },
 
   methods:{    
-    ...mapActions(['loadPokemons', 'loadAllPokemons', 'nextRequest'])
+    ...mapActions(['loadPokemons', 'nextRequest'])
   },
 
   mounted(){
     this.loadPokemons();
-    this.loadAllPokemons();
   },
 
   components: { PokeLoader, PokeBall }

@@ -1,4 +1,6 @@
 export default {
+  namespaced: true,
+  
   state(){
     return {
       likes: JSON.parse(localStorage.getItem('favorites')) || [],
@@ -9,6 +11,9 @@ export default {
   getters: {
     likes(state){
       return state.likes;
+    },
+    likesIDs(state){
+      return state.likes.map(item => item.id)
     },
     favorites(state){
       return state.favorites;
@@ -56,7 +61,7 @@ export default {
       }
     },
 
-    removePokemon({ commit, dispatch, rootState }, { pokemon, render } ){
+    removePokemon({ commit, dispatch, rootState }, { pokemon, render }){
       let { pokemons } = rootState;
 
       let currentPokemon = pokemons.find(item => item.name === pokemon.name);

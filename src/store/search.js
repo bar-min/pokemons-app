@@ -1,6 +1,8 @@
 import axios from 'axios';
 
 export default {
+  namespaced: true,
+
   state(){
     return {
       allPokemons: JSON.parse(localStorage.getItem('all')) || [],
@@ -13,12 +15,11 @@ export default {
       return state.allPokemons;
     },
 
-    searchedPokemons: (state, { likes }) => state.searchedPokemons.map(( item => {
-      let isLiked = likes.some(like => like.name === item.name);
+    searchedPokemons(state, getters, rootState, rootGetters){
+      let likesIDs = rootGetters['likes/likesIDs']
 
-      return (isLiked) ? (item.liked = true, item) : item;
-    })
-    ),
+      return state.searchedPokemons.map(( item => (likesIDs.includes(item.id)) ? (item.liked = true, item) : item))
+    }
   },
 
   mutations: {

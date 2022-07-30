@@ -33,11 +33,11 @@ import { mapGetters, mapActions } from 'vuex';
 
 export default {
   computed: {
-    ...mapGetters(['likes', 'favorites'])
+    ...mapGetters('likes', ['likes', 'favorites'])
   },
 
   methods: {
-    ...mapActions(['renderPokemons', 'removePokemon'])
+    ...mapActions('likes', ['renderPokemons', 'removePokemon'])
   },
 
   watch:{

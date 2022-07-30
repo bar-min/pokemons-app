@@ -37,7 +37,7 @@ import { mapGetters } from 'vuex';
 
 export default {
   computed: {
-    ...mapGetters(['searchedPokemons'])
+    ...mapGetters('search', ['searchedPokemons'])
   },
 
   components: { PokeDefault, PokeBall }

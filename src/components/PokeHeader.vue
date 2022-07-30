@@ -64,7 +64,7 @@ export default {
       this.clearInput();
     },
 
-    ...mapActions(['filterPokemons']),
+    ...mapActions('search', ['filterPokemons']),
 
     showBurger(){
       this.$refs.nav.classList.toggle('active');

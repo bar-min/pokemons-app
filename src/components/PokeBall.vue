@@ -9,7 +9,7 @@ export default {
   props: ['pokemon'],
 
   methods: {
-    ...mapActions(['likePokemon', 'removePokemon'])
+    ...mapActions('likes', ['likePokemon', 'removePokemon'])
   }
 }
 </script>
