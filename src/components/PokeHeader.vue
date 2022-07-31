@@ -4,8 +4,8 @@
       <div class="header__blocks">
         <div class="header__search">
           <input 
-          v-model="inputValue" 
-          @keyup.enter="searchPokemon(inputValue)" 
+          v-model.trim="inputValue" 
+          @keyup.enter="searchPokemon(inputValue.toLowerCase())" 
           @keyup.esc="clearInput" 
           @blur="inputValue ? $event.target.focus() : $event.target.blur()"
           type="text" class="header__input" placeholder="Pokemon...">
