@@ -20,18 +20,20 @@
             <div class="pokemon-block" v-for="size in sizes" :key="size"> {{ size.title }}: {{ size.unit }} </div>
           </div>
 
-          <div class="pokemon__abilities abilities pokemon-blocks">
-
-            <h2 class="abilities__title">Abilities</h2>
-
+          <div class="abilities pokemon-blocks">
+            <h2>Abilities</h2>
             <div class="abilities__wrapper pokemon-blocks">
-              <div class="abilities__item pokemon-block" v-for="ability in abilities" :key="ability">
+              <div class="abilities__item pokemon-block" 
+              v-for="ability in abilities" 
+              :key="ability"
+              :class="{ 'abilities__active' : ability.active && effect.active }">
+
                 <h3 class="abilities__name"> {{ validName(ability.name) }} </h3>
                 
-                <button @click='loadAbility(ability.url)' class="abilities__description">More</button>
+                <button class="abilities__description" @click='loadAbility(ability.url), highlightAbility(ability, abilities)'>More</button>
               </div>
 
-              <poke-loader :loading="loadingAbility" style="position: absolute;"></poke-loader> 
+              <poke-loader :loading="loadingAbility" style="position: absolute"></poke-loader> 
               
               <ability-modal 
               v-if="effect.active"
@@ -68,7 +70,7 @@
 
 <script>
 import PokeLoader from '../components/PokeLoader.vue';
-import PokeEvolution from '@/components/PokeEvolution.vue';
+import PokeEvolution from '../components/PokeEvolution.vue';
 import AbilityModal from '../components/AbilityModal.vue';
 
 import { mapActions, mapGetters } from 'vuex';
@@ -90,6 +92,11 @@ export default {
     renderPokemon(name = this.pokeName){
       this.loadPokemon(name);
       this.effect.active = false; 
+    },
+
+    highlightAbility(current, all){
+      all.forEach(item => item.active = false);
+      current.active = true;
     },
 
     ...mapActions('pokemon', ['loadPokemon', 'loadAbility']),

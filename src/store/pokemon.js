@@ -34,7 +34,7 @@ export default {
     },
     abilities(state){
       return state.abilities.map(item => {
-        return { name: item.ability.name, url: item.ability.url }
+        return { name: item.ability.name, url: item.ability.url, active: false }
       })
     },
     effect(state){
